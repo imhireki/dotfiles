@@ -69,8 +69,6 @@ for i in groups:
             desc="Switch to & move focused window to group {}".format(i.name)),
     ])
 
-layouts = [
-    layout.MonadTall(margin=8,
                      border_width=2,
                      border_normal='#D39CDE',
                      border_focus='#608BDF',
@@ -149,16 +147,6 @@ top_bar = bar.Bar(
         widget.Systray(),
 
         widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
-
-        widget.TextBox(text="\uE0B8",
-                       font="FiraCode",
-                       fontsize="20",
-                       padding=0,
-                       background='#608BDF',
-                       foreground='#D39CDE',
-                       ),
-
-        widget.QuickExit(background='#608BDF'),
         ])
 
 main_screen = Screen(top=top_bar)
