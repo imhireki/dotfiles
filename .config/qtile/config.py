@@ -31,6 +31,7 @@ keys = [
     # Apps
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "r", lazy.spawncmd()),
+    Key([mod], "e", lazy.spawn("emacs -c -a 'emacs'")),
 
     # Functions
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -51,13 +52,11 @@ groups = [
 
 for i in groups:
     keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+        # Switch to a group
+        Key([mod], i.name, lazy.group[i.name].toscreen()),
 
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name)),
+        # Move focused to a group
+        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
 
@@ -126,7 +125,8 @@ top_bar = bar.Bar(
 
         widget.Prompt(foreground='#000000',
                       background='#608BDF',
-                      prompt='spell: '),
+                      prompt='spell: ',
+                      ),
 
         widget.WindowName(background='#608BDF'),
 
@@ -145,7 +145,6 @@ top_bar = bar.Bar(
 
 main_screen = Screen(top_bar)
 screens = [main_screen]
-
 
 # Drag floating layouts.
 mouse = [
