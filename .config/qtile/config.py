@@ -4,6 +4,7 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile import qtile
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -79,69 +80,98 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
+colors = {'primary': '#D39CDE',
+          'secondary': '#608BDF',
+          'font': '#000000'}
+
+standard = {'background' : colors['primary'],
+            'foreground' : colors['secondary']}
+
+reverse = {'background' : colors['secondary'],
+           'foreground' : colors['primary']}
+
+textbox = {'fontsize': '20',
+           'padding': 0}
+
 top_bar = bar.Bar(
     size=20,
     opacity=0.75,
     margin=[8, 8, 0, 8],
-    background='#D39CDE',
+    background=colors['primary'],
     widgets = [
-        widget.TextBox(text=' \uF303',
-                      fontsize='20',
-                      padding=3,
-                      foreground='#000000',
-                      background='#D39CDE',
+        widget.Image(filename='~/penguin.png'),
+
+        widget.Prompt(foreground=colors['font'],
+                      background=colors['primary'],
+                      prompt='spell: ',
                       ),
 
-        widget.TextBox(text='\uE0B8',
-                      fontsize='20',
-                      padding=0,
-                      background='#608BCF',
-                      foreground='#D39CDE',
-                      ),
-
-        widget.CurrentLayout(background='#608BCF'),
-
-        widget.TextBox(text='\uE0B8',
-                      fontsize='20',
-                      padding=0,
-                      foreground='#608BCF',
-                      background='#D39CDE',
-                      ),
+        widget.TextBox(text="\uE0B0",
+                       **textbox,
+                       **reverse
+                       ),
 
         widget.GroupBox(font='FiraCode Bold',
                         fontsize=16,
                         highlight_method='text',
-                        active='#608BCF',
-                        inactive='#000000',
-                        this_current_screen_border='#FFFFFF'),
+
+                        inactive=colors['font'],
+                        this_current_screen_border='#FFFFFF',
+
+                        background=colors['secondary'],
+                        active=colors['primary'],
+                        ),
 
         widget.TextBox(text="\uE0B8",
-                       font="FiraCode",
-                       fontsize="20",
-                       padding=0,
-                       background='#608BDF',
-                       foreground='#D39CDE',
+                       **textbox,
+                       **standard
                        ),
 
-        widget.Prompt(foreground='#000000',
-                      background='#608BDF',
-                      prompt='spell: ',
-                      ),
+        widget.WindowName(),
 
-        widget.WindowName(background='#608BDF'),
-
-        widget.TextBox(text="\uE0B8",
-                       font="FiraCode",
-                       fontsize="20",
-                       padding=0,
-                       foreground='#608BDF',
-                       background='#D39CDE',
+        widget.TextBox(text="\uE0BA",
+                       **textbox,
+                       **standard
                        ),
 
-        widget.Systray(),
+        widget.CPU(format='CPU ({freq_current}Ghz) {load_percent}%',
+                   background=colors['secondary']),
 
-        widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
+        widget.TextBox(text="\uE0BC",
+                       **textbox,
+                       **standard
+                       ),
+
+        widget.Memory(format="Free {MemFree: .0f}M",
+                      measure_mem="M"),
+
+        widget.TextBox(text="\uE0BC",
+                       **textbox,
+                       **reverse
+                       ),
+
+        widget.NvidiaSensors(format="GPU {temp}°C",
+                             background=colors['secondary'],
+                             foreground=colors['font']),
+
+        widget.TextBox(text="\uE0BC",
+                       **textbox,
+                       **standard
+                       ),
+
+        widget.Systray(background=colors['primary']),
+
+        widget.CurrentLayout(),
+
+        widget.TextBox(text="\uE0BC",
+                       **textbox,
+                       **reverse
+                       ),
+
+        widget.Clock(format='%I:%M %p [ %A ] %m/%d/%Y',
+                     background=colors['secondary']),
         ])
+
 
 main_screen = Screen(top_bar)
 screens = [main_screen]
