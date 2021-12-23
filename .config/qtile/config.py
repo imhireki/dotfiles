@@ -31,7 +31,7 @@ keys = [
     # Apps
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "r", lazy.spawncmd()),
-    Key([mod], "e", lazy.spawn("emacs -c -a 'emacs'")),
+    Key([mod], "e", lazy.spawn("emacsclient -c -a 'emacs'")),
 
     # Functions
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
