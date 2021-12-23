@@ -9,44 +9,35 @@ mod = "mod4"
 terminal = guess_terminal()
 
 keys = [
-    # Switch between windows
+    # Switch Between Windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
-        desc="Move window focus to other window"),
+    Key([mod], "space", lazy.layout.next(), desc="Move focus next"),
 
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
-        desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    # Move the Windows
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="M/ left"),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="M/ right"),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="M/ down"),
+    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="M/ up"),
 
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
+    # Resize the Windows
     Key([mod], "i", lazy.layout.grow()),
     Key([mod], "m", lazy.layout.shrink()),
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "o", lazy.layout.maximize()),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    # Toggle between split and unsplit sides of stack.
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack"),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
-    # Toggle between different layouts as defined below
+    # Apps
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "r", lazy.spawncmd()),
+
+    # Functions
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
+    Key([mod], "b", lazy.hide_show_bar()),
 ]
 
 groups = [
@@ -69,6 +60,9 @@ for i in groups:
             desc="Switch to & move focused window to group {}".format(i.name)),
     ])
 
+
+layouts = [
+    layout.MonadTall(margin=8,
                      border_width=2,
                      border_normal='#D39CDE',
                      border_focus='#608BDF',
@@ -149,8 +143,9 @@ top_bar = bar.Bar(
         widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
         ])
 
-main_screen = Screen(top=top_bar)
+main_screen = Screen(top_bar)
 screens = [main_screen]
+
 
 # Drag floating layouts.
 mouse = [
