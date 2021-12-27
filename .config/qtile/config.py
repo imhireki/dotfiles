@@ -68,7 +68,12 @@ groups = [
                     ('s', '二'),
                     ('d', '三'),
                     ('f', '四'),
-                    ('g', '五')]
+                    ('g', '五'),
+                    ('z', '六'),
+                    ('x', '七'),
+                    ('c', '八'),
+                    ('v', '九'),
+                    ('b', '十')]
     ]
 ]
 
@@ -81,20 +86,25 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
-colors = {'secondary': '#8694c8',
-          'primary': '#ff93c0',
-          'font': '#000000'}
+colors = {
+    'primary': '#43a3e2',
+    'tertiary': '#fcaecb',
+    'secondary': '#b4e6ff',
+    'font': '#000000'
+}
 
 layouts = [
     layout.MonadTall(margin=8,
                      border_width=2,
                      border_normal=colors['secondary'],
-                     border_focus=colors['primary'],
+                     border_focus=colors['tertiary'],
                      ratio=0.6),
-    layout.Max(),
-    layout.Floating(),
+    layout.MonadWide(margin=8,
+                     border_width=2,
+                     border_normal=colors['secondary'],
+                     border_focus=colors['tertiary'],
+                     ratio=0.6),
 ]
-
 
 widget_defaults = dict(
     font='FiraCode Medium',
@@ -122,85 +132,76 @@ top_bar = bar.Bar(
     margin=[8, 8, 0, 8],
     background=colors['primary'],
     widgets = [
-        widget.Image(filename='~/Pictures/nyarch.png'),
+        widget.TextBox(text=" ",
+                       **textbox,
+                       background=colors['tertiary']
+                       ),
+        widget.Image(filename='~/Pictures/nyarch.png',
+                     background=colors['tertiary']),
 
         widget.Prompt(foreground=colors['font'],
-                      background=colors['primary'],
-                      prompt='spell: ',
+                      background=colors['tertiary'],
+                      prompt='$ ',
                       ),
 
         widget.TextBox(text="\uE0B0",
                        **textbox,
-                       **reverse
+                       foreground=colors['tertiary'],
+                       background=colors['secondary']
                        ),
 
         widget.GroupBox(font='FiraCode Bold',
                         fontsize=16,
-                        highlight_method='text',
+                        highlight_method='line',
+                        highlight_color=[colors['secondary'], colors['tertiary']],
 
                         inactive=colors['font'],
-                        this_current_screen_border='#bebebe',
+                        this_current_screen_border=colors['tertiary'],
 
                         background=colors['secondary'],
-                        active=colors['primary'],
+                        margin=5
                         ),
 
-        widget.TextBox(text="\uE0B0",
-                       **textbox,
-                       **standard
-                       ),
-
-        widget.WindowName(),
-
-        widget.TextBox(text="\uE0BA",
-                       **textbox,
-                       **standard
-                       ),
-
-        widget.CPU(format='[ CPU ({freq_current}Ghz) {load_percent}% ]',
-                   background=colors['secondary']),
-
-        widget.TextBox(text="\uE0BC",
-                       **textbox,
-                       **standard
-                       ),
-
-        widget.Memory(format="[ RAM {MemUsed: .0f}M ]",
-                      measure_mem="M",
-                      padding=2),
-
-        widget.TextBox(text="\uE0BC",
+        widget.TextBox(text="\uE0B2",
                        **textbox,
                        **reverse
                        ),
+
+        widget.WindowName(empty_group_string='hireki@archwaifu'),
+
+        widget.TextBox(text="\uE0B2",
+                       **textbox,
+                       **standard
+                       ),
+
+        widget.CPU(format='[ CPU ({freq_current}Ghz) {load_percent}%',
+                   background=colors['secondary']),
+
+        widget.ThermalSensor(fmt='{} ]',
+                             background=colors['secondary'],
+                             foreground=colors['font']),
+
+        widget.Memory(format="[ RAM {MemUsed: .0f}M ]",
+                      measure_mem="M",
+                      padding=2,
+                      background=colors['secondary']),
 
         widget.NvidiaSensors(format="[ GPU {temp}°C ]",
                              background=colors['secondary'],
                              foreground=colors['font']),
 
-        widget.TextBox(text="\uE0BC",
-                       **textbox,
-                       **standard
-                       ),
 
-        widget.PulseVolume(fmt='[ VOL {} ]'),
+        widget.PulseVolume(fmt='[ VOL {} ]',
+                           background=colors['secondary']),
 
-        widget.TextBox(text="\uE0BC",
+        widget.TextBox(text="\uE0B2",
                        **textbox,
                        **reverse
                        ),
 
-        widget.Systray(background=colors['secondary']),
+        widget.Systray(),
 
-        widget.CurrentLayout(background=colors['secondary']),
-
-        widget.TextBox(text="\uE0BC",
-                       **textbox,
-                       **standard
-                       ),
-
-        widget.Clock(format='%a %b %d %I:%M %p',
-                     background=colors['primary']),
+        widget.Clock(format='%a %d %b %I:%M %p')
         ])
 
 
