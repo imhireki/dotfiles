@@ -1,7 +1,7 @@
 from typing import List
 
 from libqtile import bar, layout, widget, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
 
 M4 = 'mod4'
@@ -26,7 +26,7 @@ keys = [
     Key([M4], 'i', lazy.layout.grow()),
     Key([M4], "o", lazy.layout.maximize()),
     Key([M4], "y", lazy.layout.normalize()),
-
+    
     # Print ( date +  clipboard yank )
     Key([M4], 'p', lazy.spawn('./scripts/print.sh')),
     Key([M4, 'shift' ], 'p', lazy.spawn('./scripts/print_select.sh')),
@@ -81,11 +81,15 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
+colors = {'secondary': '#8694c8',
+          'primary': '#ff93c0',
+          'font': '#000000'}
+
 layouts = [
     layout.MonadTall(margin=8,
                      border_width=2,
-                     border_normal='#D39CDE',
-                     border_focus='#608BDF',
+                     border_normal=colors['secondary'],
+                     border_focus=colors['primary'],
                      ratio=0.6),
     layout.Max(),
     layout.Floating(),
@@ -101,9 +105,6 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-colors = {'primary': '#D39CDE',
-          'secondary': '#608BDF',
-          'font': '#000000'}
 
 standard = {'background' : colors['primary'],
             'foreground' : colors['secondary']}
@@ -121,7 +122,7 @@ top_bar = bar.Bar(
     margin=[8, 8, 0, 8],
     background=colors['primary'],
     widgets = [
-        widget.Image(filename='~/Pictures/icon.png'),
+        widget.Image(filename='~/Pictures/nyarch.png'),
 
         widget.Prompt(foreground=colors['font'],
                       background=colors['primary'],
@@ -138,7 +139,7 @@ top_bar = bar.Bar(
                         highlight_method='text',
 
                         inactive=colors['font'],
-                        this_current_screen_border='#FFFFFF',
+                        this_current_screen_border='#bebebe',
 
                         background=colors['secondary'],
                         active=colors['primary'],
@@ -156,7 +157,7 @@ top_bar = bar.Bar(
                        **standard
                        ),
 
-        widget.CPU(format='CPU ({freq_current}Ghz) {load_percent}%',
+        widget.CPU(format='[ CPU ({freq_current}Ghz) {load_percent}% ]',
                    background=colors['secondary']),
 
         widget.TextBox(text="\uE0BC",
@@ -164,15 +165,16 @@ top_bar = bar.Bar(
                        **standard
                        ),
 
-        widget.Memory(format="Free {MemFree: .0f}M",
-                      measure_mem="M"),
+        widget.Memory(format="[ RAM {MemUsed: .0f}M ]",
+                      measure_mem="M",
+                      padding=2),
 
         widget.TextBox(text="\uE0BC",
                        **textbox,
                        **reverse
                        ),
 
-        widget.NvidiaSensors(format="GPU {temp}°C",
+        widget.NvidiaSensors(format="[ GPU {temp}°C ]",
                              background=colors['secondary'],
                              foreground=colors['font']),
 
@@ -181,17 +183,24 @@ top_bar = bar.Bar(
                        **standard
                        ),
 
-        widget.Systray(background=colors['primary']),
-
-        widget.CurrentLayout(),
+        widget.PulseVolume(fmt='[ VOL {} ]'),
 
         widget.TextBox(text="\uE0BC",
                        **textbox,
                        **reverse
                        ),
 
-        widget.Clock(format='%I:%M %p [ %A ] %m/%d/%Y',
-                     background=colors['secondary']),
+        widget.Systray(background=colors['secondary']),
+
+        widget.CurrentLayout(background=colors['secondary']),
+
+        widget.TextBox(text="\uE0BC",
+                       **textbox,
+                       **standard
+                       ),
+
+        widget.Clock(format='%a %b %d %I:%M %p',
+                     background=colors['primary']),
         ])
 
 
