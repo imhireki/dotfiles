@@ -1,8 +1,10 @@
-from typing import List
-
-from libqtile import bar, layout, widget, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
+from libqtile.layout.base import _SimpleLayoutBase
+from libqtile import bar, layout, widget, qtile
+from libqtile.log_utils import logger
 from libqtile.lazy import lazy
+
+from typing import List
 
 M4 = 'mod4'
 M1 = 'mod1'
@@ -61,21 +63,17 @@ keys = [
 
 groups = [
     Group(name=n, label=l)
-    for n, l in
-    [
-        (str(n), l)
-        for n,l in [('a', '一'),
-                    ('s', '二'),
-                    ('d', '三'),
-                    ('f', '四'),
-                    ('g', '五'),
-                    ('z', '六'),
-                    ('x', '七'),
-                    ('c', '八'),
-                    ('v', '九'),
-                    ('b', '十')]
+    for n, l in [('a', '一'),
+                 ('s', '二'),
+                 ('d', '三'),
+                 ('f', '四'),
+                 ('g', '五'),
+                 ('z', '六'),
+                 ('x', '七'),
+                 ('c', '八'),
+                 ('v', '九'),
+                 ('b', '十')]
     ]
-]
 
 for i in groups:
     keys.extend([
@@ -99,12 +97,56 @@ layouts = [
                      border_normal=colors['secondary'],
                      border_focus=colors['tertiary'],
                      ratio=0.6),
-    layout.MonadWide(margin=8,
-                     border_width=2,
-                     border_normal=colors['secondary'],
-                     border_focus=colors['tertiary'],
-                     ratio=0.6),
 ]
+
+class Focus(_SimpleLayoutBase):
+    def add(self, client):
+        """
+        WHEN: whenever a WINDOW is added to a GROUP and the LAYOUT is FOCUSED or
+              not
+        DO:   add the WINDOW to LAYOUT
+        """
+
+        # If a new window = new client(offsetted to focus)
+        return super().add(client,
+                           offset_to_current=1)
+
+    def configure(self, client, screen_rect):
+        border = 2
+        margin = 8
+
+        # place() -  WINDOW CMD command
+        # | X |  Y | width | heght | borderwidth | above | margin |
+        # | 0 | 28 |  1920 |  1080 |           2 | False |      8 |
+
+        client.place(screen_rect.x,
+                     screen_rect.y,
+                     screen_rect.width - 4,
+                     screen_rect.height - 4,
+                     border,
+                     colors['secondary'],
+                     False,
+                     margin
+                     )
+
+        # "Focus" management
+        if self.clients and client is self.clients.current_client:
+            client.unhide()
+            #client.qtile.cmd_hide_show_bar()
+        else:
+            client.hide()
+
+
+    # redirect [M4] command to its functions
+    cmd_previous = _SimpleLayoutBase.previous
+    cmd_next = _SimpleLayoutBase.next
+
+    cmd_up = cmd_previous
+    cmd_down = cmd_next
+
+
+
+layouts.append(Focus())
 
 widget_defaults = dict(
     font='FiraCode Medium',
@@ -234,6 +276,6 @@ floating_layout = layout.Floating(float_rules=[
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
-reconfigure_screens = True
+reconfigure_screens = False
 auto_minimize = True
 wmname = "LG3D"
