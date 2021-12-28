@@ -118,7 +118,6 @@ class Focus(_SimpleLayoutBase):
         # place() -  WINDOW CMD command
         # | X |  Y | width | heght | borderwidth | above | margin |
         # | 0 | 28 |  1920 |  1080 |           2 | False |      8 |
-
         client.place(screen_rect.x,
                      screen_rect.y,
                      screen_rect.width - 4,
@@ -132,7 +131,6 @@ class Focus(_SimpleLayoutBase):
         # "Focus" management
         if self.clients and client is self.clients.current_client:
             client.unhide()
-            #client.qtile.cmd_hide_show_bar()
         else:
             client.hide()
 
