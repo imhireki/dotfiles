@@ -1,6 +1,6 @@
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
-from libqtile import bar, layout, widget, qtile
-# from libqtile.log_utils import logger
+from libqtile import bar, layout, widget, qtile, hook
+from libqtile.log_utils import logger
 from libqtile.lazy import lazy
 from custom.layouts import Focus
 
@@ -89,9 +89,8 @@ palette = ['#fcaecb',
            '#7b68ee',
            '#006400',
            '#ffa500',
-           '#000000']
+           '#171717']
 
-# TODO ALIAS FOR MARGIN BORDER
 layouts = [
     layout.MonadTall(
         border_width=2,
@@ -108,7 +107,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='FiraCode Medium',
+    font='FiraCode',
     fontsize=14,
     padding=1,
     )
@@ -120,7 +119,7 @@ textbox = {'fontsize': '20',
 
 top_bar = bar.Bar(
     size=20,
-    opacity=0.85,
+    opacity=1,
     margin=[8, 8, 0, 8],
 
     widgets = [
@@ -180,43 +179,44 @@ top_bar = bar.Bar(
             text="\uE0B2",
             **textbox,
             background=palette[2],
-            foreground=palette[1]
+            foreground=palette[7]
             ),
 
         widget.CPU(
-            format='[ CPU ({freq_current}Ghz) {load_percent}%',
-            background=palette[1],
+            format='[CPU ({freq_current}Ghz) {load_percent}%',
+            background=palette[7],
             foreground=palette[3]
             ),
 
         widget.ThermalSensor(
             fmt='{} ]',
-            background=palette[1],
-            foreground=palette[3]),
+            background=palette[7],
+            foreground=palette[3
+]),
 
         widget.Memory(
             format="[ RAM {MemUsed: .0f}M ]",
             measure_mem="M",
-            background=palette[1],
+            background=palette[7],
             foreground=palette[4]
             ),
 
         widget.NvidiaSensors(
             format="[ GPU {temp}°C ]",
-            background=palette[1],
+            background=palette[7],
             foreground=palette[5]
             ),
 
         widget.PulseVolume(
             fmt='[ VOL {} ]',
-            background=palette[1],
+            background=palette[7],
             foreground=palette[6]
             ),
 
         widget.TextBox(
             text="\uE0B2",
             **textbox,
-            background=palette[1],
+            background=palette[7],
             foreground=palette[2]
             ),
 
@@ -249,3 +249,13 @@ focus_on_window_activation = "smart"
 reconfigure_screens = False
 auto_minimize = True
 wmname = "LG3D"
+
+@hook.subscribe.layout_change
+def change_change(layout, group):
+    """ Hide bar when in Focus layout """
+    if layout.name == 'focus':
+        if group.screen.top.size != 0:
+            qtile.cmd_hide_show_bar()
+    else:
+        if group.screen.top.size == 0:
+            qtile.cmd_hide_show_bar()
