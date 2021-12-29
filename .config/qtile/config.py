@@ -1,10 +1,8 @@
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
-from libqtile.layout.base import _SimpleLayoutBase
 from libqtile import bar, layout, widget, qtile
-from libqtile.log_utils import logger
+# from libqtile.log_utils import logger
 from libqtile.lazy import lazy
-
-from typing import List
+from custom.layouts import Focus
 
 M4 = 'mod4'
 M1 = 'mod1'
@@ -84,171 +82,155 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
-colors = {
-    'primary': '#43a3e2',
-    'tertiary': '#fcaecb',
-    'secondary': '#b4e6ff',
-    'font': '#000000'
-}
+palette = ['#fcaecb',
+           '#b4e6ff',
+           '#43a3e2',
+           '#ff3030',
+           '#7b68ee',
+           '#006400',
+           '#ffa500',
+           '#000000']
 
+# TODO ALIAS FOR MARGIN BORDER
 layouts = [
-    layout.MonadTall(margin=8,
-                     border_width=2,
-                     border_normal=colors['secondary'],
-                     border_focus=colors['tertiary'],
-                     ratio=0.6),
+    layout.MonadTall(
+        border_width=2,
+        margin=8,
+        border_focus=palette[0],
+        border_normal=palette[1],
+        ratio=0.6
+    ),
+    Focus(
+        margin=8,
+        border_width=2,
+        border_focus=palette[1]
+    )
 ]
-
-class Focus(_SimpleLayoutBase):
-    def add(self, client):
-        """
-        WHEN: whenever a WINDOW is added to a GROUP and the LAYOUT is FOCUSED or
-              not
-        DO:   add the WINDOW to LAYOUT
-        """
-
-        # If a new window = new client(offsetted to focus)
-        return super().add(client,
-                           offset_to_current=1)
-
-    def configure(self, client, screen_rect):
-        border = 2
-        margin = 8
-
-        # place() -  WINDOW CMD command
-        # | X |  Y | width | heght | borderwidth | above | margin |
-        # | 0 | 28 |  1920 |  1080 |           2 | False |      8 |
-        client.place(screen_rect.x,
-                     screen_rect.y,
-                     screen_rect.width - 4,
-                     screen_rect.height - 4,
-                     border,
-                     colors['secondary'],
-                     False,
-                     margin
-                     )
-
-        # "Focus" management
-        if self.clients and client is self.clients.current_client:
-            client.unhide()
-        else:
-            client.hide()
-
-
-    # redirect [M4] command to its functions
-    cmd_previous = _SimpleLayoutBase.previous
-    cmd_next = _SimpleLayoutBase.next
-
-    cmd_up = cmd_previous
-    cmd_down = cmd_next
-
-
-
-layouts.append(Focus())
 
 widget_defaults = dict(
     font='FiraCode Medium',
     fontsize=14,
-    padding=3,
-    foreground='#000000'
-)
+    padding=1,
+    )
 
 extension_defaults = widget_defaults.copy()
-
-
-standard = {'background' : colors['primary'],
-            'foreground' : colors['secondary']}
-
-reverse = {'background' : colors['secondary'],
-           'foreground' : colors['primary']}
 
 textbox = {'fontsize': '20',
            'padding': 0}
 
-
 top_bar = bar.Bar(
     size=20,
-    opacity=0.75,
+    opacity=0.85,
     margin=[8, 8, 0, 8],
-    background=colors['primary'],
+
     widgets = [
-        widget.TextBox(text=" ",
-                       **textbox,
-                       background=colors['tertiary']
-                       ),
-        widget.Image(filename='~/Pictures/nyarch.png',
-                     background=colors['tertiary']),
+        widget.TextBox(
+            text=" ",
+            **textbox,
+            background=palette[0]
+            ),
 
-        widget.Prompt(foreground=colors['font'],
-                      background=colors['tertiary'],
-                      prompt='$ ',
-                      ),
+        widget.Image(
+            filename='~/Pictures/nyarch.png',
+            background=palette[0]
+            ),
 
-        widget.TextBox(text="\uE0B0",
-                       **textbox,
-                       foreground=colors['tertiary'],
-                       background=colors['secondary']
-                       ),
+        widget.Prompt(
+            background=palette[0],
+            foreground=palette[7],
+            prompt='$ '
+            ),
 
-        widget.GroupBox(font='FiraCode Bold',
-                        fontsize=16,
-                        highlight_method='line',
-                        highlight_color=[colors['secondary'], colors['tertiary']],
+        widget.TextBox(
+            text="\uE0B0",
+            **textbox,
+            foreground=palette[0],
+            background=palette[1]
+            ),
 
-                        inactive=colors['font'],
-                        this_current_screen_border=colors['tertiary'],
+        widget.GroupBox(
+            highlight_method='line',
+            font='FiraCode Bold',
+            fontsize=16,
+            margin=5,
 
-                        background=colors['secondary'],
-                        margin=5
-                        ),
+            highlight_color=[palette[1], palette[0]],
+            this_current_screen_border=palette[0],
 
-        widget.TextBox(text="\uE0B2",
-                       **textbox,
-                       **reverse
-                       ),
+            inactive=palette[7],
+            active=palette[0],
 
-        widget.WindowName(empty_group_string='hireki@archwaifu'),
+            background=palette[1],
+            ),
 
-        widget.TextBox(text="\uE0B2",
-                       **textbox,
-                       **standard
-                       ),
+        widget.TextBox(
+            text="\uE0B2",
+            **textbox,
+            background=palette[1],
+            foreground=palette[2]
+            ),
 
-        widget.CPU(format='[ CPU ({freq_current}Ghz) {load_percent}%',
-                   background=colors['secondary']),
+        widget.WindowName(
+            empty_group_string='hireki@archwaifu',
+            background=palette[2],
+            foreground=palette[7]
+            ),
 
-        widget.ThermalSensor(fmt='{} ]',
-                             background=colors['secondary'],
-                             foreground=colors['font']),
+        widget.TextBox(
+            text="\uE0B2",
+            **textbox,
+            background=palette[2],
+            foreground=palette[1]
+            ),
 
-        widget.Memory(format="[ RAM {MemUsed: .0f}M ]",
-                      measure_mem="M",
-                      padding=2,
-                      background=colors['secondary']),
+        widget.CPU(
+            format='[ CPU ({freq_current}Ghz) {load_percent}%',
+            background=palette[1],
+            foreground=palette[3]
+            ),
 
-        widget.NvidiaSensors(format="[ GPU {temp}°C ]",
-                             background=colors['secondary'],
-                             foreground=colors['font']),
+        widget.ThermalSensor(
+            fmt='{} ]',
+            background=palette[1],
+            foreground=palette[3]),
 
+        widget.Memory(
+            format="[ RAM {MemUsed: .0f}M ]",
+            measure_mem="M",
+            background=palette[1],
+            foreground=palette[4]
+            ),
 
-        widget.PulseVolume(fmt='[ VOL {} ]',
-                           background=colors['secondary']),
+        widget.NvidiaSensors(
+            format="[ GPU {temp}°C ]",
+            background=palette[1],
+            foreground=palette[5]
+            ),
 
-        widget.TextBox(text="\uE0B2",
-                       **textbox,
-                       **reverse
-                       ),
+        widget.PulseVolume(
+            fmt='[ VOL {} ]',
+            background=palette[1],
+            foreground=palette[6]
+            ),
 
-        widget.Systray(),
+        widget.TextBox(
+            text="\uE0B2",
+            **textbox,
+            background=palette[1],
+            foreground=palette[2]
+            ),
 
-        widget.Clock(format='%a %d %b %I:%M %p')
+        widget.Systray(background=palette[2]),
+
+        widget.Clock(
+            format='%a %d %b %I:%M %p',
+            background=palette[2],
+            foreground=palette[7])
         ])
-
 
 main_screen = Screen(top_bar)
 screens = [main_screen]
 
-# Drag floating layouts.
 mouse = [
     Drag([M4], "Button1", lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
@@ -262,16 +244,6 @@ dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    *layout.Floating.default_float_rules,
-    Match(wm_class='confirmreset'),  # gitk
-    Match(wm_class='makebranch'),  # gitk
-    Match(wm_class='maketag'),  # gitk
-    Match(wm_class='ssh-askpass'),  # ssh-askpass
-    Match(title='branchdialog'),  # gitk
-    Match(title='pinentry'),  # GPG key password entry
-])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = False
