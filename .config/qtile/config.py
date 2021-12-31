@@ -321,3 +321,12 @@ reconfigure_screens = False
 auto_minimize = True
 wmname = "LG3D"
 
+@hook.subscribe.layout_change
+def hide_bar_focus_layout(layout, group):
+    """ Hide bar when in Focus layout """
+    if layout.name == 'focus':
+        if group.screen.top.size != 0:
+            qtile.cmd_hide_show_bar()
+    else:
+        if group.screen.top.size == 0:
+            qtile.cmd_hide_show_bar()
