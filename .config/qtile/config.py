@@ -1,8 +1,8 @@
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
-from libqtile import bar, layout, widget, qtile
-# from libqtile.log_utils import logger
+from libqtile import bar, layout, widget, qtile, hook
+from libqtile.log_utils import logger
 from libqtile.lazy import lazy
-from custom.layouts import Focus
+from custom.layouts import Focus, Max
 
 M4 = 'mod4'
 M1 = 'mod1'
@@ -82,6 +82,7 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
+# default
 palette = ['#fcaecb',
            '#b4e6ff',
            '#43a3e2',
@@ -89,26 +90,75 @@ palette = ['#fcaecb',
            '#7b68ee',
            '#006400',
            '#ffa500',
-           '#000000']
+           '#171717']
 
-# TODO ALIAS FOR MARGIN BORDER
+# city
+palette = ['#2b2d59',
+           '#6d6cbe',
+           '#3c4084',
+           '#99dad3',
+           '#e5f3a9',
+           '#b3c3d8',
+           '#99d265',
+           '#ffffff']
+
+# halloween
+palette = ['#ffaaa5',
+           '#a6e4fb',
+           '#75d5ff',
+           '#d04e74',
+           '#3e588b',
+           '#8fde9d',
+           '#feffa1',
+           '#171717']
+
+# astro
+palette = ['#1a1a1a',
+           '#5b5b5b',
+           '#2d2d2d',
+           '#d5d5d5',
+           '#dddddd',
+           '#cecece',
+           '#c1c1c1',
+           '#d1d1d1']
+
+# city
+palette = ['#2b2d59',
+           '#6d6cbe',
+           '#3c4084',
+           '#99dad3',
+           '#e5f3a9',
+           '#b3c3d8',
+           '#99d265',
+           '#ffffff']
+
 layouts = [
     layout.MonadTall(
-        border_width=2,
-        margin=8,
+        border_width=3,
+        margin=10,
         border_focus=palette[0],
         border_normal=palette[1],
         ratio=0.6
     ),
-    Focus(
-        margin=8,
+    Max(
+        margin=10,
         border_width=2,
         border_focus=palette[1]
+    ),
+    Focus(
+        margin=10,
+        border_width=2,
+        border_focus=palette[0]
+    ),
+    layout.Floating(
+        border_width=2,
+        border_focus=palette[1],
+        border_normal=palette[0],
     )
 ]
 
 widget_defaults = dict(
-    font='FiraCode Medium',
+    font='FiraCode',
     fontsize=14,
     padding=1,
     )
@@ -120,8 +170,8 @@ textbox = {'fontsize': '20',
 
 top_bar = bar.Bar(
     size=20,
-    opacity=0.85,
-    margin=[8, 8, 0, 8],
+    opacity=1,
+    margin=[10, 10, 0, 10],
 
     widgets = [
         widget.TextBox(
@@ -184,7 +234,7 @@ top_bar = bar.Bar(
             ),
 
         widget.CPU(
-            format='[ CPU ({freq_current}Ghz) {load_percent}%',
+            format='[CPU ({freq_current}Ghz) {load_percent}%',
             background=palette[1],
             foreground=palette[3]
             ),
@@ -228,7 +278,16 @@ top_bar = bar.Bar(
             foreground=palette[7])
         ])
 
-main_screen = Screen(top_bar)
+main_screen = Screen(
+    top_bar,
+    wallpaper_mode='fill',
+    wallpaper='~/wallpapers/93495842_p0.png'
+)
+
+# wallpaper='~/wallpapers/85376422_p0.jpg' halloween
+# wallpaper='~/wallpapers/94917578_p0.jpg' astro
+# wallpaper='~/wallpapers/93495842_p0.png' city
+
 screens = [main_screen]
 
 mouse = [
@@ -238,6 +297,18 @@ mouse = [
          start=lazy.window.get_size()),
     Click([M4], "Button2", lazy.window.bring_to_front())
 ]
+
+floating_layout = layout.Floating(float_rules=[
+    # Run the utility of `xprop` to see the wm class and name of an X client.
+    # default_float_rules include: utility, notification, toolbar, splash, dialog,
+    # file_progress, confirm, download and error.
+    *layout.Floating.default_float_rules,
+    Match(title='Confirmation'),      # tastyworks exit box
+    Match(title='Qalculate!'),        # qalculate-gtk
+    Match(wm_class='kdenlive'),       # kdenlive
+    Match(wm_class='pinentry-gtk-2'), # GPG key password entry
+])
+
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
@@ -249,3 +320,4 @@ focus_on_window_activation = "smart"
 reconfigure_screens = False
 auto_minimize = True
 wmname = "LG3D"
+
