@@ -51,4 +51,5 @@ fi
 xrandr --output VGA-0 --mode 1360x768 --panning 1700x960 --scale 1.25 &
 picom &
 nitrogen --restore &
+/usr/bin/emacs --daemon &
 exec qtile start
