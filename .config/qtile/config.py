@@ -4,8 +4,13 @@ from libqtile.log_utils import logger
 from libqtile.lazy import lazy
 from custom.layouts import Focus, Max
 
+from os.path import expanduser
+import subprocess
+
+
 M4 = 'mod4'
 M1 = 'mod1'
+
 
 keys = [
     # Move window focus
@@ -82,55 +87,14 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
-# default
-palette = ['#fcaecb',
-           '#b4e6ff',
-           '#43a3e2',
-           '#ff3030',
-           '#7b68ee',
-           '#006400',
-           '#ffa500',
-           '#171717']
-
-# city
-palette = ['#2b2d59',
-           '#6d6cbe',
-           '#3c4084',
-           '#99dad3',
-           '#e5f3a9',
-           '#b3c3d8',
-           '#99d265',
-           '#ffffff']
-
-# halloween
-palette = ['#ffaaa5',
-           '#a6e4fb',
-           '#75d5ff',
-           '#d04e74',
-           '#3e588b',
-           '#8fde9d',
-           '#feffa1',
-           '#171717']
-
-# astro
-palette = ['#1a1a1a',
-           '#5b5b5b',
-           '#2d2d2d',
-           '#d5d5d5',
-           '#dddddd',
-           '#cecece',
-           '#c1c1c1',
-           '#d1d1d1']
-
-# city
-palette = ['#2b2d59',
-           '#6d6cbe',
-           '#3c4084',
-           '#99dad3',
-           '#e5f3a9',
-           '#b3c3d8',
-           '#99d265',
-           '#ffffff']
+palette = ['#5b00a4',
+           '#528ff1',
+           '#5c2ecb',
+           '#f2afca',
+           '#d7009d',
+           '#93cffb',
+           '#c9329a',
+           '#d7c6e3']
 
 layouts = [
     layout.MonadTall(
@@ -140,21 +104,16 @@ layouts = [
         border_normal=palette[1],
         ratio=0.6
     ),
-    Max(
-        margin=10,
-        border_width=2,
-        border_focus=palette[1]
-    ),
     Focus(
         margin=10,
         border_width=2,
         border_focus=palette[0]
     ),
-    layout.Floating(
+    Max(
+        margin=10,
         border_width=2,
-        border_focus=palette[1],
-        border_normal=palette[0],
-    )
+        border_focus=palette[1]
+    ),
 ]
 
 widget_defaults = dict(
@@ -209,7 +168,7 @@ top_bar = bar.Bar(
 
             inactive=palette[7],
             active=palette[0],
-
+            urgent_border=palette[1],
             background=palette[1],
             ),
 
@@ -281,12 +240,8 @@ top_bar = bar.Bar(
 main_screen = Screen(
     top_bar,
     wallpaper_mode='fill',
-    wallpaper='~/wallpapers/93495842_p0.png'
+    wallpaper='~/Pictures/Pixiv.Id.40752740.full.3503032.jpg',
 )
-
-# wallpaper='~/wallpapers/85376422_p0.jpg' halloween
-# wallpaper='~/wallpapers/94917578_p0.jpg' astro
-# wallpaper='~/wallpapers/93495842_p0.png' city
 
 screens = [main_screen]
 
@@ -299,16 +254,12 @@ mouse = [
 ]
 
 floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    # default_float_rules include: utility, notification, toolbar, splash, dialog,
-    # file_progress, confirm, download and error.
     *layout.Floating.default_float_rules,
     Match(title='Confirmation'),      # tastyworks exit box
     Match(title='Qalculate!'),        # qalculate-gtk
     Match(wm_class='kdenlive'),       # kdenlive
     Match(wm_class='pinentry-gtk-2'), # GPG key password entry
 ])
-
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
@@ -330,3 +281,7 @@ def hide_bar_focus_layout(layout, group):
     else:
         if group.screen.top.size == 0:
             qtile.cmd_hide_show_bar()
+
+@hook.subscribe.startup_once
+def start_once():
+    subprocess.call([expanduser('~/') + '.config/qtile/autostart.sh'])
