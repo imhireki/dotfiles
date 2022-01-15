@@ -3,6 +3,7 @@ from libqtile import bar, layout, widget, qtile, hook
 from libqtile.log_utils import logger
 from libqtile.lazy import lazy
 from custom.layouts import Focus, Max
+from custom.widgets import CPU
 
 from os.path import expanduser
 import subprocess
@@ -10,7 +11,6 @@ import subprocess
 
 M4 = 'mod4'
 M1 = 'mod1'
-
 
 keys = [
     # Move window focus
@@ -41,11 +41,16 @@ keys = [
     Key([M4], "w", lazy.next_layout()),
     Key([M4], "e", lazy.hide_show_bar()),
     Key([M4], 'r', lazy.spawncmd()),
+    Key([M4], 't', repaint_wallpaper()),
 
     # Apps
-    Key([M1], '1', lazy.spawn("kitty")),
+    Key([M1], '1', lazy.spawn("kitty --single-instance")),
     Key([M1], '2', lazy.spawn("emacsclient -c -a 'emacs'")),
     Key([M1], '3', lazy.spawn('librewolf')),
+    Key([M1], '4', lazy.spawn('nautilus')),
+    Key([M1], '5', lazy.spawn('gimp')),
+    Key([M1], '6', lazy.spawn('spotify')),
+    Key([M1], '7', lazy.spawn('discord')),
 
     # Volume
     Key([M1], 'q', lazy.spawn('amixer -q -D pulse set Master 10%-')),
@@ -90,10 +95,10 @@ for i in groups:
 palette = ['#5b00a4',
            '#528ff1',
            '#5c2ecb',
-           '#f2afca',
-           '#d7009d',
-           '#93cffb',
-           '#c9329a',
+           '#5c2ecb',
+           '#5c2ecb',
+           '#5c2ecb',
+           '#5c2ecb',
            '#d7c6e3']
 
 layouts = [
@@ -140,7 +145,7 @@ top_bar = bar.Bar(
             ),
 
         widget.Image(
-            filename='~/Pictures/nyarch.png',
+            filename='~/Pictures/icons/nyarch.png',
             background=palette[0]
             ),
 
@@ -162,13 +167,10 @@ top_bar = bar.Bar(
             font='FiraCode Bold',
             fontsize=16,
             margin=5,
-
             highlight_color=[palette[1], palette[0]],
             this_current_screen_border=palette[0],
-
             inactive=palette[7],
             active=palette[0],
-            urgent_border=palette[1],
             background=palette[1],
             ),
 
@@ -180,7 +182,7 @@ top_bar = bar.Bar(
             ),
 
         widget.WindowName(
-            empty_group_string='hireki@archwaifu',
+            empty_group_string='hireki@nano',
             background=palette[2],
             foreground=palette[7]
             ),
@@ -192,7 +194,7 @@ top_bar = bar.Bar(
             foreground=palette[1]
             ),
 
-        widget.CPU(
+        CPU(
             format='[CPU ({freq_current}Ghz) {load_percent}%',
             background=palette[1],
             foreground=palette[3]
@@ -204,7 +206,7 @@ top_bar = bar.Bar(
             foreground=palette[3]),
 
         widget.Memory(
-            format="[ RAM {MemUsed: .0f}M ]",
+            format="[ RAM {MemUsed: .0f}M SWAP {SwapUsed: .0f}M]",
             measure_mem="M",
             background=palette[1],
             foreground=palette[4]
@@ -240,7 +242,7 @@ top_bar = bar.Bar(
 main_screen = Screen(
     top_bar,
     wallpaper_mode='fill',
-    wallpaper='~/Pictures/Pixiv.Id.40752740.full.3503032.jpg',
+    wallpaper='~/Pictures/wallpapers/Pixiv.Id.40752740.full.3503032.jpg',
 )
 
 screens = [main_screen]
