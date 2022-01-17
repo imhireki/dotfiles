@@ -2,7 +2,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile import bar, layout, widget, qtile, hook
 from libqtile.log_utils import logger
 from libqtile.lazy import lazy
-from custom.layouts import Focus, Max
+from custom.layouts import Max, MaxFocus, MonadFocus
 from custom.widgets import CPU
 
 from os.path import expanduser
@@ -41,7 +41,6 @@ keys = [
     Key([M4], "w", lazy.next_layout()),
     Key([M4], "e", lazy.hide_show_bar()),
     Key([M4], 'r', lazy.spawncmd()),
-    Key([M4], 't', repaint_wallpaper()),
 
     # Apps
     Key([M1], '1', lazy.spawn("kitty --single-instance")),
@@ -109,15 +108,22 @@ layouts = [
         border_normal=palette[1],
         ratio=0.6
     ),
-    Focus(
+    MonadFocus(
+        border_width=3,
         margin=10,
-        border_width=2,
-        border_focus=palette[0]
+        border_focus=palette[0],
+        border_normal=palette[1],
+        ratio=0.6
     ),
     Max(
         margin=10,
         border_width=2,
         border_focus=palette[1]
+    ),
+    MaxFocus(
+        margin=10,
+        border_width=2,
+        border_focus=palette[0]
     ),
 ]
 
@@ -244,7 +250,6 @@ main_screen = Screen(
     wallpaper_mode='fill',
     wallpaper='~/Pictures/wallpapers/Pixiv.Id.40752740.full.3503032.jpg',
 )
-
 screens = [main_screen]
 
 mouse = [
@@ -277,7 +282,8 @@ wmname = "LG3D"
 @hook.subscribe.layout_change
 def hide_bar_focus_layout(layout, group):
     """ Hide bar when in Focus layout """
-    if layout.name == 'focus':
+
+    if 'focus' in layout.name:
         if group.screen.top.size != 0:
             qtile.cmd_hide_show_bar()
     else:

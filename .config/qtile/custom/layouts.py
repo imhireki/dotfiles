@@ -1,7 +1,8 @@
 from libqtile.layout.base import _SimpleLayoutBase
+from libqtile.layout.xmonad import MonadTall
 
 
-class Focus(_SimpleLayoutBase):
+class Max(_SimpleLayoutBase):
     def __init__(self, **config):
         self.border_width = config.get('border_width')
         self.border_focus = config.get('border_focus')
@@ -46,3 +47,7 @@ class Focus(_SimpleLayoutBase):
 
     cmd_up = cmd_previous
     cmd_down = cmd_next
+
+class MaxFocus(Max): ...
+
+class MonadFocus(MonadTall): ...
