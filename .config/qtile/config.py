@@ -31,16 +31,22 @@ keys = [
     Key([M4], 'i', lazy.layout.grow()),
     Key([M4], "o", lazy.layout.maximize()),
     Key([M4], "y", lazy.layout.normalize()),
-    
+
     # Print ( date +  clipboard yank )
     Key([M4], 'p', lazy.spawn('./scripts/print.sh')),
     Key([M4, 'shift' ], 'p', lazy.spawn('./scripts/print_select.sh')),
 
     # Functions
     Key([M4], "q", lazy.window.kill()),
-    Key([M4], "w", lazy.next_layout()),
     Key([M4], "e", lazy.hide_show_bar()),
     Key([M4], 'r', lazy.spawncmd()),
+    # Move to layout
+    KeyChord([M4], 'w', [
+        Key([], '1', lazy.to_layout_index(index=0)),
+        Key([], '2', lazy.to_layout_index(index=1)),
+        Key([], '3', lazy.to_layout_index(index=2)),
+        Key([], '4', lazy.to_layout_index(index=3)),
+        ]),
 
     # Apps
     Key([M1], '1', lazy.spawn("kitty --single-instance")),
