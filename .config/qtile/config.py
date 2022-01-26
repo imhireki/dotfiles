@@ -76,16 +76,23 @@ keys = [
 
 groups = [
     Group(name=n, label=l)
-    for n, l in [('a', '一'),
-                 ('s', '二'),
-                 ('d', '三'),
-                 ('f', '四'),
-                 ('g', '五'),
-                 ('z', '六'),
-                 ('x', '七'),
-                 ('c', '八'),
-                 ('v', '九'),
-                 ('b', '十')]
+
+    if n not in ['s', 'x']
+
+    else
+
+    Group(name=n, label=l, layout='monadfocus')
+
+    for n, l in [('a', '\ufa9e'),
+                 ('s', '\ue7c5'),
+                 ('d', '\uf489'),
+                 ('f', '\uf233'),
+                 ('g', '\uf1d7'),
+                 ('z', '\uf1bc'),
+                 ('x', '\uf11b'),
+                 ('c', '\uf108'),
+                 ('v', '\ue5ff'),
+                 ('b', '\ue28c')]
     ]
 
 for i in groups:
