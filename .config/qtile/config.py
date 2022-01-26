@@ -152,53 +152,55 @@ textbox = {'fontsize': '20',
 top_bar = bar.Bar(
     size=20,
     opacity=1,
-    margin=[10, 10, 0, 10],
-
+    margin=[5, 5, 0, 5],
     widgets = [
         widget.TextBox(
             text=" ",
             **textbox,
-            background=palette[0]
+            background=palette[1]
             ),
 
         widget.Image(
-            filename='~/Pictures/icons/nyarch.png',
-            background=palette[0]
+            filename='~/ahaha.png',
+            background=palette[1]
             ),
 
         widget.Prompt(
-            background=palette[0],
-            foreground=palette[7],
-            prompt='$ '
+            background=palette[1],
+            foreground='#000000',
+            prompt=' >_ '
             ),
 
         widget.TextBox(
-            text="\uE0B0",
+            text="\uE0B0\uE0B1",
+            font='FiraCode Bold',
             **textbox,
-            foreground=palette[0],
-            background=palette[1]
+            background=palette[0],
+            foreground=palette[1]
             ),
 
         widget.GroupBox(
             highlight_method='line',
             font='FiraCode Bold',
-            fontsize=16,
-            margin=5,
-            highlight_color=[palette[1], palette[0]],
-            this_current_screen_border=palette[0],
+            fontsize=25,
+            margin=3,
+            highlight_color=[palette[0], palette[0]],
+            this_current_screen_border=palette[1],
+            urgent_alert_method=palette[2],
             inactive=palette[7],
-            active=palette[0],
-            background=palette[1],
+            active=palette[1],
+            background=palette[0],
             ),
 
         widget.TextBox(
-            text="\uE0B2",
+            text="\uE0B0",
             **textbox,
-            background=palette[1],
-            foreground=palette[2]
+            background=palette[2],
+            foreground=palette[0]
             ),
 
         widget.WindowName(
+            padding=10,
             empty_group_string='hireki@nano',
             background=palette[2],
             foreground=palette[7]
@@ -211,38 +213,94 @@ top_bar = bar.Bar(
             foreground=palette[1]
             ),
 
+        widget.Image(
+            margin=2,
+            filename='~/cpu.png',
+            background=palette[1]
+            ),
+
         CPU(
-            format='[CPU ({freq_current}Ghz) {load_percent}%',
+            format=' ({freq_current}Ghz) {load_percent}%',
             background=palette[1],
             foreground=palette[3]
             ),
 
+        widget.Image(
+            margin=2,
+            filename='~/thermometer.png',
+            background=palette[1]
+            ),
+
         widget.ThermalSensor(
-            fmt='{} ]',
+            fmt='{}  ',
             background=palette[1],
             foreground=palette[3]),
 
+        widget.TextBox(
+            text=" ",
+            font='FiraCode Bold',
+            **textbox,
+            background=palette[1],
+            foreground=palette[2]
+            ),
+
+        widget.Image(
+            filename='~/ram.png',
+            background=palette[1]
+            ),
+
         widget.Memory(
-            format="[ RAM {MemUsed: .0f}M SWAP {SwapUsed: .0f}M]",
+            format=" {MemFree: .0f}M ",
             measure_mem="M",
             background=palette[1],
             foreground=palette[4]
             ),
 
+        widget.TextBox(
+            text="",
+            font='FiraCode Bold',
+            **textbox,
+            background=palette[1],
+            foreground=palette[2]
+            ),
+
+        widget.Image(
+            margin=2,
+            filename='~/graphics-card.png',
+            background=palette[1]
+            ),
+
         widget.NvidiaSensors(
-            format="[ GPU {temp}°C ]",
+            format="{temp}°C",
+            padding=10,
             background=palette[1],
             foreground=palette[5]
             ),
 
+        widget.TextBox(
+            text="",
+            font='FiraCode Bold',
+            **textbox,
+            background=palette[1],
+            foreground=palette[2]
+            ),
+
+        widget.Image(
+            margin=2,
+            filename='~/loud-speaker.png',
+            background=palette[1]
+            ),
+
         widget.PulseVolume(
-            fmt='[ VOL {} ]',
+            fmt='{}',
+            padding=10,
             background=palette[1],
             foreground=palette[6]
             ),
 
         widget.TextBox(
-            text="\uE0B2",
+            text="\uE0B3\uE0B2",
+            font='FiraCode Bold',
             **textbox,
             background=palette[1],
             foreground=palette[2]
@@ -251,6 +309,7 @@ top_bar = bar.Bar(
         widget.Systray(background=palette[2]),
 
         widget.Clock(
+            padding=10,
             format='%a %d %b %I:%M %p',
             background=palette[2],
             foreground=palette[7])
