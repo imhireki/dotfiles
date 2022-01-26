@@ -113,38 +113,36 @@ palette = ['#5b00a4',
            '#5c2ecb',
            '#d7c6e3']
 
+monad_options = {
+    'border_width': 3,
+    'margin': 5,
+    'border_focus': palette[0],
+    'border_normal': palette[1],
+    'align': 1,
+    'max_ratio': 0.7,
+    'min_ratio': 0.3,
+    'change_ratio': 0.02,
+    'min_secondary_size': 245
+}
+
+max_options = {
+    'margin': 5,
+    'border_width': 2,
+    'border_focus': palette[1]
+}
+
 layouts = [
-    layout.MonadTall(
-        border_width=3,
-        margin=10,
-        border_focus=palette[0],
-        border_normal=palette[1],
-        ratio=0.6
-    ),
-    MonadFocus(
-        border_width=3,
-        margin=10,
-        border_focus=palette[0],
-        border_normal=palette[1],
-        ratio=0.6
-    ),
-    Max(
-        margin=10,
-        border_width=2,
-        border_focus=palette[1]
-    ),
-    MaxFocus(
-        margin=10,
-        border_width=2,
-        border_focus=palette[0]
-    ),
+    Monad(**monad_options),
+    MonadFocus(**monad_options),
+    Max(**max_options),
+    MaxFocus(**max_options),
 ]
 
 widget_defaults = dict(
     font='FiraCode',
     fontsize=14,
     padding=1,
-    )
+)
 
 extension_defaults = widget_defaults.copy()
 
