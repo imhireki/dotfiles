@@ -50,4 +50,17 @@ class Max(_SimpleLayoutBase):
 
 class MaxFocus(Max): ...
 
-class MonadFocus(MonadTall): ...
+class Monad(MonadTall):
+    def cmd_normalize(self, redraw=True):
+        self.ratio = self._med_ratio
+        "Evenly distribute screen-space among secondary clients"
+        n = len(self.clients) - 1  # exclude main client, 0
+        # if secondary clients exist
+        if n > 0 and self.screen_rect is not None:
+            self.relative_sizes = [1.0 / n] * n
+        # reset main pane ratio
+        if redraw:
+            self.group.layout_all()
+        self.do_normalize = False
+
+class MonadFocus(Monad): ...
