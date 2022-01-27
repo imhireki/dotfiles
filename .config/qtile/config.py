@@ -351,14 +351,13 @@ wmname = "LG3D"
 
 @hook.subscribe.layout_change
 def hide_bar_focus_layout(layout, group):
-    """ Hide bar when in Focus layout """
-
-    if 'focus' in layout.name:
-        if group.screen.top.size != 0:
-            qtile.cmd_hide_show_bar()
-    else:
-        if group.screen.top.size == 0:
-            qtile.cmd_hide_show_bar()
+    """ Hide bar when in some focus layout """
+    if group.screen: # avoid problems with screen start time
+        bar = group.screen.top.is_show()
+        if 'focus' in layout.name and bar is True:
+            group.screen.top.show(False)
+        elif bar is False:
+            group.screen.top.show(True)
 
 @hook.subscribe.startup_once
 def start_once():
