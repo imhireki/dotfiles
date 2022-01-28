@@ -136,7 +136,12 @@ layouts = [
     MonadFocus(**monad_options),
     Max(**max_options),
     MaxFocus(**max_options),
+    layout.Floating(border_focus = palette[0],
+                    border_normal = palette[1]
+    )
 ]
+
+floating_layout = layouts[4]
 
 widget_defaults = dict(
     font='FiraCode',
