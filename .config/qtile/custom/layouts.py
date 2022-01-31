@@ -1,5 +1,6 @@
 from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.layout.xmonad import MonadTall
+from libqtile.log_utils import logger
 
 
 class Max(_SimpleLayoutBase):
@@ -52,7 +53,6 @@ class MaxFocus(Max): ...
 
 class Monad(MonadTall):
     def cmd_normalize(self, redraw=True):
-        self.ratio = self._med_ratio
         "Evenly distribute screen-space among secondary clients"
         n = len(self.clients) - 1  # exclude main client, 0
         # if secondary clients exist
@@ -62,5 +62,15 @@ class Monad(MonadTall):
         if redraw:
             self.group.layout_all()
         self.do_normalize = False
+
+    def cmd_reset(self, redraw=True):
+        "Normalize main and secondary clients"
+        self.ratio = self._med_ratio
+        self.cmd_normalize(redraw)
+
+    def cmd_normalize_main(self, redraw=True):
+        "Normalize main client"
+        self.ratio = self._med_ratio
+        self.group.layout_all()
 
 class MonadFocus(Monad): ...
