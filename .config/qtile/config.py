@@ -30,7 +30,12 @@ keys = [
     Key([M4], 'u', lazy.layout.shrink()),
     Key([M4], 'i', lazy.layout.grow()),
     Key([M4], "o", lazy.layout.maximize()),
-    Key([M4], "y", lazy.layout.normalize()),
+
+    KeyChord([M4], 'y', [
+        Key([], '1', lazy.layout.reset()),
+        Key([], '2', lazy.layout.normalize()),
+        Key([], '3', lazy.layout.normalize_main())
+    ]),
 
     # Print ( date +  clipboard yank )
     Key([M4], 'p', lazy.spawn('./scripts/print.sh')),
@@ -39,7 +44,6 @@ keys = [
     # Functions
     Key([M4], "q", lazy.window.kill()),
     Key([M4], "e", lazy.hide_show_bar()),
-    Key([M4], 'r', lazy.spawncmd()),
 
     # Extensions
     Key([M4], 'r', lazy.run_extension(extension.DmenuRun(
