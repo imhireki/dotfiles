@@ -40,6 +40,15 @@ keys = [
     Key([M4], "q", lazy.window.kill()),
     Key([M4], "e", lazy.hide_show_bar()),
     Key([M4], 'r', lazy.spawncmd()),
+
+    # Extensions
+    Key([M4], 'r', lazy.run_extension(extension.DmenuRun(
+        dmenu_prompt='>_  ',
+        dmenu_lines=10,
+        dmenu_font='FiraCode',
+        dmenu_height=30,
+    ))),
+
     # Move to layout
     KeyChord([M4], 'w', [
         Key([], '1', lazy.to_layout_index(index=0)),
