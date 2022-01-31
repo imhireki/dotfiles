@@ -66,9 +66,7 @@ keys = [
     Key([M1], '2', lazy.spawn("emacsclient -c -a 'emacs'")),
     Key([M1], '3', lazy.spawn('librewolf')),
     Key([M1], '4', lazy.spawn('nautilus')),
-    Key([M1], '5', lazy.spawn('gimp')),
-    Key([M1], '6', lazy.spawn('spotify')),
-    Key([M1], '7', lazy.spawn('discord')),
+    Key([M1], '5', lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'")),
 
     # Volume
     Key([M1], 'q', lazy.spawn('amixer -q -D pulse set Master 10%-')),
