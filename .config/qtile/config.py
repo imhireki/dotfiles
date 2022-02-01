@@ -115,20 +115,38 @@ for i in groups:
         Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
     ])
 
-palette = ['#5b00a4',
-           '#528ff1',
-           '#5c2ecb',
-           '#5c2ecb',
-           '#5c2ecb',
-           '#5c2ecb',
-           '#5c2ecb',
-           '#d7c6e3']
+palette = {
+    'main': ['#ff79c6',
+             '#44475a',
+             '#6472a4',
+             '#b293f9'],
+
+    'base': ['#282a36',
+             '#f8f8f2']
+}
+
+bar_palette = {
+    'icon':   [palette['main'][0],
+               palette['base'][0]],
+
+    'group':  [palette['main'][1],
+               palette['base'][1],
+               palette['main'][0]],
+
+    'spacer': [palette['main'][2]],
+
+    'sys':    [palette['main'][3],
+               palette['base'][1]],
+
+    'clock':  [palette['base'][0],
+               palette['base'][1]]
+}
 
 monad_options = {
     'border_width': 3,
     'margin': 5,
-    'border_focus': palette[0],
-    'border_normal': palette[1],
+    'border_focus': palette['main'][0],
+    'border_normal': palette['main'][1],
     'align': 1,
     'max_ratio': 0.7,
     'min_ratio': 0.3,
@@ -139,7 +157,7 @@ monad_options = {
 max_options = {
     'margin': 5,
     'border_width': 2,
-    'border_focus': palette[1]
+    'border_focus': palette['main'][1]
 }
 
 layouts = [
@@ -147,9 +165,8 @@ layouts = [
     MonadFocus(**monad_options),
     Max(**max_options),
     MaxFocus(**max_options),
-    layout.Floating(border_focus = palette[0],
-                    border_normal = palette[1]
-    )
+    layout.Floating(border_focus=palette['main'][0],
+                    border_normal=palette['main'][1])
 ]
 
 floating_layout = layouts[4]
@@ -162,173 +179,136 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-textbox = {'fontsize': '20',
-           'padding': 0}
+textbox = {'fontsize': '20', 'padding': 0}
 
 top_bar = bar.Bar(
-    size=20,
+    size=22,
     opacity=1,
-    margin=[5, 5, 0, 5],
+    margin=[5,5,0,5],
     widgets = [
         widget.TextBox(
             text=" ",
             **textbox,
-            background=palette[1]
+            background=bar_palette['icon'][0]
             ),
-
         widget.Image(
             filename='~/ahaha.png',
-            background=palette[1]
+            background=bar_palette['icon'][0]
             ),
-
-        widget.Prompt(
-            background=palette[1],
-            foreground='#000000',
-            prompt=' >_ '
-            ),
-
         widget.TextBox(
-            text="\uE0B0\uE0B1",
+            text="\uE0B0",
             font='FiraCode Bold',
             **textbox,
-            background=palette[0],
-            foreground=palette[1]
+            background=bar_palette['group'][0],
+            foreground=bar_palette['icon'][0]
             ),
-
+        widget.TextBox(
+            text="\uE0B1",
+            font='FiraCode Bold',
+            **textbox,
+            background=bar_palette['group'][0],
+            foreground=bar_palette['icon'][0]
+            ),
         widget.GroupBox(
-            highlight_method='line',
             font='FiraCode Bold',
             fontsize=25,
             margin=3,
-            highlight_color=[palette[0], palette[0]],
-            this_current_screen_border=palette[1],
-            urgent_alert_method=palette[2],
-            inactive=palette[7],
-            active=palette[1],
-            background=palette[0],
-            ),
 
+            highlight_method='line',
+            highlight_color=bar_palette['group'][0],
+            this_current_screen_border=[bar_palette['group'][2]],
+
+            background=bar_palette['group'][0],
+            inactive=bar_palette['group'][1],
+            active=bar_palette['group'][2],
+            ),
         widget.TextBox(
             text="\uE0B0",
             **textbox,
-            background=palette[2],
-            foreground=palette[0]
+            foreground=bar_palette['group'][0],
+            background=bar_palette['spacer'][0]
             ),
-
-        widget.WindowName(
-            padding=10,
-            empty_group_string='hireki@nano',
-            background=palette[2],
-            foreground=palette[7]
+        widget.Spacer(
+            background=bar_palette['spacer'][0]
             ),
-
         widget.TextBox(
             text="\uE0B2",
             **textbox,
-            background=palette[2],
-            foreground=palette[1]
+            background=bar_palette['spacer'][0],
+            foreground=bar_palette['sys'][0]
             ),
-
         widget.Image(
             margin=2,
             filename='~/cpu.png',
-            background=palette[1]
+            background=bar_palette['sys'][0]
             ),
-
         CPU(
             format=' ({freq_current}Ghz) {load_percent}%',
-            background=palette[1],
-            foreground=palette[3]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]
             ),
-
         widget.Image(
             margin=2,
             filename='~/thermometer.png',
-            background=palette[1]
+            background=bar_palette['sys'][0]
             ),
-
         widget.ThermalSensor(
             fmt='{}  ',
-            background=palette[1],
-            foreground=palette[3]),
-
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]),
         widget.TextBox(
             text=" ",
             font='FiraCode Bold',
             **textbox,
-            background=palette[1],
-            foreground=palette[2]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]
             ),
-
         widget.Image(
             filename='~/ram.png',
-            background=palette[1]
+            background=bar_palette['sys'][0]
             ),
 
         widget.Memory(
             format=" {MemFree: .0f}M ",
             measure_mem="M",
-            background=palette[1],
-            foreground=palette[4]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]
             ),
-
-        widget.TextBox(
-            text="",
-            font='FiraCode Bold',
-            **textbox,
-            background=palette[1],
-            foreground=palette[2]
-            ),
-
         widget.Image(
             margin=2,
             filename='~/graphics-card.png',
-            background=palette[1]
+            background=bar_palette['sys'][0]
             ),
-
         widget.NvidiaSensors(
             format="{temp}°C",
             padding=10,
-            background=palette[1],
-            foreground=palette[5]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]
             ),
-
-        widget.TextBox(
-            text="",
-            font='FiraCode Bold',
-            **textbox,
-            background=palette[1],
-            foreground=palette[2]
-            ),
-
         widget.Image(
             margin=2,
             filename='~/loud-speaker.png',
-            background=palette[1]
+            background=bar_palette['sys'][0]
             ),
-
         widget.PulseVolume(
             fmt='{}',
             padding=10,
-            background=palette[1],
-            foreground=palette[6]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['sys'][1]
             ),
-
         widget.TextBox(
             text="\uE0B3\uE0B2",
             font='FiraCode Bold',
             **textbox,
-            background=palette[1],
-            foreground=palette[2]
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['clock'][0]
             ),
-
-        widget.Systray(background=palette[2]),
-
+        widget.Systray(background=bar_palette['clock'][0]),
         widget.Clock(
             padding=10,
             format='%a %d %b %I:%M %p',
-            background=palette[2],
-            foreground=palette[7])
+            background=bar_palette['clock'][0],
+            foreground=bar_palette['clock'][1])
         ])
 
 main_screen = Screen(
