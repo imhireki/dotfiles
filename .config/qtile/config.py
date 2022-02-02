@@ -350,10 +350,12 @@ def hide_bar_focus_layout(layout, group):
     """ Hide bar when in some focus layout """
     if group.screen: # avoid problems with screen start time
         bar = group.screen.top.is_show()
-        if 'focus' in layout.name and bar is True:
-            group.screen.top.show(False)
-        elif bar is False:
-            group.screen.top.show(True)
+        if 'focus' in layout.name:
+            if bar is True:
+                group.screen.top.show(False)
+        else:
+            if bar is False:
+                group.screen.top.show(True)
 
 @hook.subscribe.startup_once
 def start_once():
