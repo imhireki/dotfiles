@@ -1,7 +1,7 @@
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile import bar, layout, widget, qtile, hook
-from libqtile.log_utils import logger
 from libqtile.lazy import lazy
+
 from custom.layouts import Max, MaxFocus, MonadFocus
 from custom.widgets import CPU
 
@@ -87,13 +87,9 @@ keys = [
 
 groups = [
     Group(name=n, label=l)
-
     if n not in ['s', 'x']
-
     else
-
     Group(name=n, label=l, layout='monadfocus')
-
     for n, l in [('a', '\ufa9e'),
                  ('s', '\ue7c5'),
                  ('d', '\uf489'),
@@ -104,7 +100,7 @@ groups = [
                  ('c', '\uf108'),
                  ('v', '\ue5ff'),
                  ('b', '\ue28c')]
-    ]
+]
 
 for i in groups:
     keys.extend([
@@ -316,6 +312,7 @@ main_screen = Screen(
     wallpaper_mode='fill',
     wallpaper='~/Pictures/wallpapers/Pixiv.Id.40752740.full.3503032.jpg',
 )
+
 screens = [main_screen]
 
 mouse = [
@@ -325,17 +322,6 @@ mouse = [
          start=lazy.window.get_size()),
     Click([M4], "Button2", lazy.window.bring_to_front())
 ]
-
-dgroups_key_binder = None
-dgroups_app_rules = []  # type: List
-follow_mouse_focus = True
-bring_front_click = False
-cursor_warp = False
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-reconfigure_screens = False
-auto_minimize = True
-wmname = "LG3D"
 
 @hook.subscribe.layout_change
 def hide_bar_focus_layout(layout, group):
@@ -352,3 +338,14 @@ def hide_bar_focus_layout(layout, group):
 @hook.subscribe.startup_once
 def start_once():
     subprocess.call([expanduser('~/') + '.config/qtile/autostart.sh'])
+
+dgroups_key_binder = None
+dgroups_app_rules = []  # type: List
+follow_mouse_focus = True
+bring_front_click = False
+cursor_warp = False
+auto_fullscreen = True
+focus_on_window_activation = "smart"
+reconfigure_screens = False
+auto_minimize = True
+wmname = "LG3D"
