@@ -188,19 +188,17 @@ top_bar = bar.Bar(
             background=bar_palette['icon'][0]
             ),
         widget.Image(
-            filename='~/ahaha.png',
+            filename=f'~/.config/qtile/images/ahaha.png',
             background=bar_palette['icon'][0]
             ),
         widget.TextBox(
             text="\uE0B0",
-            font='FiraCode Bold',
             **textbox,
             background=bar_palette['group'][0],
             foreground=bar_palette['icon'][0]
             ),
         widget.TextBox(
             text="\uE0B1",
-            font='FiraCode Bold',
             **textbox,
             background=bar_palette['group'][0],
             foreground=bar_palette['icon'][0]
@@ -219,8 +217,14 @@ top_bar = bar.Bar(
             active=bar_palette['group'][2],
             ),
         widget.TextBox(
-            text="\uE0B0",
+            text="\uE0B0\uE0B1",
             **textbox,
+            background=bar_palette['spacer'][0],
+            foreground=bar_palette['group'][0]
+            ),
+        widget.TextBox(
+            text="Kyah~",
+            padding=10,
             foreground=bar_palette['group'][0],
             background=bar_palette['spacer'][0]
             ),
@@ -228,14 +232,19 @@ top_bar = bar.Bar(
             background=bar_palette['spacer'][0]
             ),
         widget.TextBox(
-            text="\uE0B2",
+            text="\uE0B3\uE0B2",
             **textbox,
             background=bar_palette['spacer'][0],
             foreground=bar_palette['sys'][0]
             ),
+        widget.TextBox(
+            text=" ",
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['clock'][0]
+            ),
         widget.Image(
             margin=2,
-            filename='~/cpu.png',
+            filename=f'~/.config/qtile/images/cpu.png',
             background=bar_palette['sys'][0]
             ),
         CPU(
@@ -245,7 +254,7 @@ top_bar = bar.Bar(
             ),
         widget.Image(
             margin=2,
-            filename='~/thermometer.png',
+            filename=f'~/.config/qtile/images/thermometer.png',
             background=bar_palette['sys'][0]
             ),
         widget.ThermalSensor(
@@ -253,26 +262,30 @@ top_bar = bar.Bar(
             background=bar_palette['sys'][0],
             foreground=bar_palette['sys'][1]),
         widget.TextBox(
-            text=" ",
-            font='FiraCode Bold',
+            text="\uE0B3 ",
             **textbox,
             background=bar_palette['sys'][0],
-            foreground=bar_palette['sys'][1]
+            foreground=bar_palette['clock'][0]
             ),
         widget.Image(
-            filename='~/ram.png',
+            filename=f'~/.config/qtile/images/ram.png',
             background=bar_palette['sys'][0]
             ),
-
         widget.Memory(
-            format=" {MemFree: .0f}M ",
+            format="{MemFree: .0f}M ",
             measure_mem="M",
             background=bar_palette['sys'][0],
             foreground=bar_palette['sys'][1]
             ),
+        widget.TextBox(
+            text="\uE0B3 ",
+            **textbox,
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['clock'][0]
+            ),
         widget.Image(
             margin=2,
-            filename='~/graphics-card.png',
+            filename=f'~/.config/qtile/images/graphics-card.png',
             background=bar_palette['sys'][0]
             ),
         widget.NvidiaSensors(
@@ -281,9 +294,15 @@ top_bar = bar.Bar(
             background=bar_palette['sys'][0],
             foreground=bar_palette['sys'][1]
             ),
+        widget.TextBox(
+            text="\uE0B3 ",
+            **textbox,
+            background=bar_palette['sys'][0],
+            foreground=bar_palette['clock'][0]
+            ),
         widget.Image(
             margin=2,
-            filename='~/loud-speaker.png',
+            filename='~/.config/qtile/images/loud-speaker.png',
             background=bar_palette['sys'][0]
             ),
         widget.PulseVolume(
@@ -294,7 +313,6 @@ top_bar = bar.Bar(
             ),
         widget.TextBox(
             text="\uE0B3\uE0B2",
-            font='FiraCode Bold',
             **textbox,
             background=bar_palette['sys'][0],
             foreground=bar_palette['clock'][0]
