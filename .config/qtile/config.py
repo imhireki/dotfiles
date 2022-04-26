@@ -357,6 +357,15 @@ def hide_bar_focus_layout(layout, group):
 def start_once():
     subprocess.call([expanduser('~/') + '.config/qtile/autostart.sh'])
 
+@hook.subscribe.client_new
+def disable_floating(window):
+    rules = [
+        Match(wm_class="mpv")
+    ]
+    if any(window.match(rule) for rule in rules):
+        window.togroup(qtile.current_group.name)
+        window.cmd_disable_floating()
+
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
