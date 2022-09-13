@@ -10,8 +10,8 @@ bind "set completion-ignore-case on"
 
 # -*- Export -*-
 export TERM="xterm-256color"
-export EDITOR="emacsclient -t -a ''"
-export VISUAL="emacsclient -c -a emacs"
+export EDITOR="nvim"
+export VISUAL="nvim"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export HISTCONTROL=ignoredups:erasedups
 export GIT_SSH_COMMAND="ssh -i ~/.ssh/github_key -F /dev/null"
@@ -27,15 +27,24 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias cat='bat'
 alias doom='~/.emacs.d/bin/doom'
+alias pytree='tree -I env -I __pycache__ -I *.pyc'
+
+# - Python
+alias actv8='. env/bin/activate'
+
 # - Django
 alias djmm='python3 manage.py makemigrations'
 alias djm8='python3 manage.py migrate'
 alias djsu='python3 manage.py createsuperuser'
 alias djsh='python3 manage.py shell'
 alias djrun='python3 manage.py runserver'
+
 # - Git
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push'
 alias gpu='git pull'
+alias gb='git branch'
+alias gco='git checkout'
+alias gd='git diff'
