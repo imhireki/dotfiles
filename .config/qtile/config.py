@@ -1,9 +1,8 @@
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
-from libqtile import bar, layout, widget, qtile, hook
+from libqtile.config import Click, Drag, Group, Key, Screen, KeyChord
+from libqtile import bar, layout, widget, hook
 from libqtile.lazy import lazy
 
-from custom.layouts import Max, MaxFocus, MonadFocus
-from custom.widgets import CPU
+from custom.layouts import Max, MaxFocus, MonadFocus, Monad
 
 from os.path import expanduser
 import subprocess
@@ -12,13 +11,25 @@ import subprocess
 M4 = 'mod4'
 M1 = 'mod1'
 
+palette = {
+    'main': [
+        '#de41c4',
+        '#282a36',
+        '#4c4bff',
+        '#a956fe',
+    ],
+    'base': [
+        '#282a36',
+        '#f8f8f2'
+    ]
+}
+
 keys = [
     # Move window focus
     Key([M4], "h", lazy.layout.left()),
     Key([M4], "l", lazy.layout.right()),
     Key([M4], "j", lazy.layout.down()),
     Key([M4], "k", lazy.layout.up()),
-    Key([M4], "space", lazy.layout.next()),
 
     # Move the window
     Key([M4, "shift"], "h", lazy.layout.shuffle_left()),
@@ -30,28 +41,11 @@ keys = [
     Key([M4], 'u', lazy.layout.shrink()),
     Key([M4], 'i', lazy.layout.grow()),
     Key([M4], "o", lazy.layout.maximize()),
-
     KeyChord([M4], 'y', [
         Key([], '1', lazy.layout.reset()),
         Key([], '2', lazy.layout.normalize()),
         Key([], '3', lazy.layout.normalize_main())
     ]),
-
-    # Print ( date +  clipboard yank )
-    Key([M4], 'p', lazy.spawn('./scripts/print.sh')),
-    Key([M4, 'shift' ], 'p', lazy.spawn('./scripts/print_select.sh')),
-
-    # Functions
-    Key([M4], "q", lazy.window.kill()),
-    Key([M4], "e", lazy.hide_show_bar()),
-
-    # Extensions
-    Key([M4], 'r', lazy.run_extension(extension.DmenuRun(
-        dmenu_prompt='>_  ',
-        dmenu_lines=10,
-        dmenu_font='FiraCode',
-        dmenu_height=30,
-    ))),
 
     # Move to layout
     KeyChord([M4], 'w', [
@@ -59,14 +53,17 @@ keys = [
         Key([], '2', lazy.to_layout_index(index=1)),
         Key([], '3', lazy.to_layout_index(index=2)),
         Key([], '4', lazy.to_layout_index(index=3)),
-        ]),
+        Key([], '5', lazy.to_layout_index(index=4)),
+    ]),
+
+    Key([M4], 'p', lazy.spawn('./scripts/print.sh')),
+    Key([M4], "q", lazy.window.kill()),
+    Key([M4], "e", lazy.hide_show_bar()),
+    Key([M4], 'r', lazy.spawn("rofi -show run")),
 
     # Apps
-    Key([M1], '1', lazy.spawn("kitty --single-instance")),
-    Key([M1], '2', lazy.spawn("emacsclient -c -a 'emacs'")),
-    Key([M1], '3', lazy.spawn('librewolf')),
-    Key([M1], '4', lazy.spawn('nautilus')),
-    Key([M1], '5', lazy.spawn("emacsclient -c -a 'emacs' --eval '(+vterm/here nil)'")),
+    Key([M1], '1', lazy.spawn("alacritty")),
+    Key([M1], '2', lazy.spawn('qutebrowser')),
 
     # Volume
     Key([M1], 'q', lazy.spawn('amixer -q -D pulse set Master 10%-')),
@@ -75,6 +72,11 @@ keys = [
 
     # Scripts
     Key([M1], 'h', lazy.spawn('sudo ./scripts/clear_drop_caches.sh')),
+    KeyChord([M1], 'r', [
+        Key([], 'v', lazy.spawn('./scripts/rec.sh video')),
+        Key([], 'c', lazy.spawn('./scripts/rec.sh screencast')),
+        Key([], 'k', lazy.spawn('./scripts/rec.sh kill')),
+    ]),
 
     # Qtile Managemant
     Key([M1, 'control'], '1', lazy.restart()),
@@ -86,15 +88,16 @@ keys = [
 ]
 
 groups = [
-    Group(name=n, label=l)
-    if n not in ['s', 'x']
-    else
+    Group(name=n, label=l, layout='monad')
+    if n not in ['s', 'x', 'c'] else
     Group(name=n, label=l, layout='monadfocus')
+    if n != 'c' else
+    Group(name=n, label=l, layout='floating')
     for n, l in [('a', '\ufa9e'),
                  ('s', '\ue7c5'),
                  ('d', '\uf489'),
                  ('f', '\uf233'),
-                 ('g', '\uf1d7'),
+                 ('g', '\uf1c0'),
                  ('z', '\uf1bc'),
                  ('x', '\uf11b'),
                  ('c', '\uf108'),
@@ -104,56 +107,34 @@ groups = [
 
 for i in groups:
     keys.extend([
-        # Switch to a group
-        Key([M4], i.name, lazy.group[i.name].toscreen()),
-
-        # Move focused to a group
-        Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)),
-    ])
-
-palette = {
-    'main': ['#ff79c6',
-             '#44475a',
-             '#6472a4',
-             '#b293f9'],
-
-    'base': ['#282a36',
-             '#f8f8f2']
-}
+        Key([M4], i.name, lazy.group[i.name].toscreen()), # switch to group
+        Key([M4, "shift"], i.name, lazy.window.togroup(i.name, switch_group=False)), # move to group
+])
 
 bar_palette = {
-    'icon':   [palette['main'][0],
-               palette['base'][0]],
-
-    'group':  [palette['main'][1],
-               palette['base'][1],
-               palette['main'][0]],
-
+    'icon':   [palette['main'][0], palette['base'][0]],
+    'group':  [palette['base'][0], palette['base'][1], palette['main'][0]],
     'spacer': [palette['main'][2]],
-
-    'sys':    [palette['main'][3],
-               palette['base'][1]],
-
-    'clock':  [palette['base'][0],
-               palette['base'][1]]
+    'sys':    [palette['main'][1], palette['base'][1]],
+    'clock':  [palette['main'][3], palette['base'][0]]
 }
 
 monad_options = {
     'border_width': 3,
-    'margin': 5,
+    'margin': 10,
     'border_focus': palette['main'][0],
-    'border_normal': palette['main'][1],
+    'border_normal': palette['main'][2],
     'align': 1,
-    'max_ratio': 0.7,
-    'min_ratio': 0.3,
-    'change_ratio': 0.02,
+    'max_ratio': 0.65,
+    'min_ratio': 0.35,
+    'change_ratio': 0.01,
     'min_secondary_size': 245
 }
 
 max_options = {
-    'margin': 5,
-    'border_width': 2,
-    'border_focus': palette['main'][1]
+    'margin': 10,
+    'border_width': 3,
+    'border_focus': palette['main'][2]
 }
 
 layouts = [
@@ -161,8 +142,11 @@ layouts = [
     MonadFocus(**monad_options),
     Max(**max_options),
     MaxFocus(**max_options),
-    layout.Floating(border_focus=palette['main'][0],
-                    border_normal=palette['main'][1])
+    layout.Floating(
+        border_focus=palette['main'][0],
+        border_normal=palette['main'][1],
+        border_width=3,
+    )
 ]
 
 floating_layout = layouts[4]
@@ -175,7 +159,9 @@ widget_defaults = dict(
 
 extension_defaults = widget_defaults.copy()
 
-textbox = {'fontsize': '20', 'padding': 0}
+textbox = {'fontsize': 20,
+           'padding': 0,
+           'font': 'Caskaydia Cove Nerd Font'}
 
 top_bar = bar.Bar(
     size=22,
@@ -188,17 +174,11 @@ top_bar = bar.Bar(
             background=bar_palette['icon'][0]
             ),
         widget.Image(
-            filename=f'~/.config/qtile/images/ahaha.png',
+            filename=f'~/.config/qtile/images/kusanagi.png',
             background=bar_palette['icon'][0]
             ),
         widget.TextBox(
-            text="\uE0B0",
-            **textbox,
-            background=bar_palette['group'][0],
-            foreground=bar_palette['icon'][0]
-            ),
-        widget.TextBox(
-            text="\uE0B1",
+            text="\ue0c0 ",
             **textbox,
             background=bar_palette['group'][0],
             foreground=bar_palette['icon'][0]
@@ -217,21 +197,18 @@ top_bar = bar.Bar(
             active=bar_palette['group'][2],
             ),
         widget.TextBox(
-            text="\uE0B0\uE0B1",
+            text="\ue0c0 ",
             **textbox,
             background=bar_palette['spacer'][0],
             foreground=bar_palette['group'][0]
             ),
         widget.TextBox(
-            text="Kyah~",
-            padding=10,
+            width=bar.STRETCH,
+            text="🔸 🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸",
             foreground=bar_palette['group'][0],
             background=bar_palette['spacer'][0]
             ),
-        widget.Spacer(
-            background=bar_palette['spacer'][0]
-            ),
-        widget.TextBox(
+         widget.TextBox(
             text="\uE0B3\uE0B2",
             **textbox,
             background=bar_palette['spacer'][0],
@@ -247,7 +224,7 @@ top_bar = bar.Bar(
             filename=f'~/.config/qtile/images/cpu.png',
             background=bar_palette['sys'][0]
             ),
-        CPU(
+        widget.CPU(
             format=' ({freq_current}Ghz) {load_percent}%',
             background=bar_palette['sys'][0],
             foreground=bar_palette['sys'][1]
@@ -262,10 +239,10 @@ top_bar = bar.Bar(
             background=bar_palette['sys'][0],
             foreground=bar_palette['sys'][1]),
         widget.TextBox(
-            text="\uE0B3 ",
+            text="\uE0B9\uE0B3 ",
             **textbox,
             background=bar_palette['sys'][0],
-            foreground=bar_palette['clock'][0]
+            foreground=palette['main'][0]
             ),
         widget.Image(
             filename=f'~/.config/qtile/images/ram.png',
@@ -278,10 +255,10 @@ top_bar = bar.Bar(
             foreground=bar_palette['sys'][1]
             ),
         widget.TextBox(
-            text="\uE0B3 ",
+            text="\uE0bd\uE0B3 ",
             **textbox,
             background=bar_palette['sys'][0],
-            foreground=bar_palette['clock'][0]
+            foreground=palette['main'][2]
             ),
         widget.Image(
             margin=2,
@@ -295,10 +272,10 @@ top_bar = bar.Bar(
             foreground=bar_palette['sys'][1]
             ),
         widget.TextBox(
-            text="\uE0B3 ",
+            text="\uE0B9\uE0B3 ",
             **textbox,
             background=bar_palette['sys'][0],
-            foreground=bar_palette['clock'][0]
+            foreground=palette['main'][0]
             ),
         widget.Image(
             margin=2,
@@ -312,23 +289,30 @@ top_bar = bar.Bar(
             foreground=bar_palette['sys'][1]
             ),
         widget.TextBox(
-            text="\uE0B3\uE0B2",
+            text="\uE0Bd\uE0B3 ",
             **textbox,
             background=bar_palette['sys'][0],
-            foreground=bar_palette['clock'][0]
+            foreground=palette['main'][2]
             ),
-        widget.Systray(background=bar_palette['clock'][0]),
+        widget.Systray(background=bar_palette['sys'][0]),
         widget.Clock(
             padding=10,
             format='%a %d %b %I:%M %p',
-            background=bar_palette['clock'][0],
-            foreground=bar_palette['clock'][1])
-        ])
+            background=bar_palette['sys'][0],
+            foreground=palette['base'][1]
+        ),
+        widget.TextBox(
+            text="\ue0c0 ",
+            **textbox,
+            background=palette['main'][2],
+            foreground=palette['base'][0]
+            ),
+    ])
 
 main_screen = Screen(
-    top_bar,
+    top=top_bar,
     wallpaper_mode='fill',
-    wallpaper='~/Pictures/wallpapers/Pixiv.Id.40752740.full.3503032.jpg',
+    wallpaper='~/Pictures/wp8312609-aesthetic-jjba-laptop-wallpapers.jpg'
 )
 
 screens = [main_screen]

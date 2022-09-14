@@ -1,4 +1,3 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 picom &
-/usr/bin/emacs --daemon &
