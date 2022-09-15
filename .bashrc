@@ -3,6 +3,8 @@
 # -*- Shell -*-
 [[ $- != *i* ]] && return  # If not running interactively, don't do anything
 
+set -o vi
+
 PS1="\[\033[38;5;69m\][\[$(tput sgr0)\]\[\033[38;5;219m\]\u\[$(tput sgr0)\]\[\033[38;5;75m\]@\[$(tput sgr0)\]\[\033[38;5;205m\]\h\[$(tput sgr0)\]\[\033[38;5;69m\]](\[$(tput sgr0)\]\[\033[38;5;227m\]\W\[$(tput sgr0)\]\[\033[38;5;69m\])\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 shopt -s autocd
 shopt -s cdspell
