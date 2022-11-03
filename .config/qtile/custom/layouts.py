@@ -1,31 +1,26 @@
+# type: ignore
+
 from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.layout.xmonad import MonadTall
-from libqtile.log_utils import logger
 
 
 class Max(_SimpleLayoutBase):
-    def __init__(self, **config):
+    """Maximized layout with borders."""
+    cmd_previous = _SimpleLayoutBase.previous
+    cmd_up = cmd_previous
+    cmd_next = _SimpleLayoutBase.next
+    cmd_down = cmd_next
+
+    def __init__(self, **config) -> None:
         self.border_width = config.get('border_width')
         self.border_focus = config.get('border_focus')
         self.margin = config.get('margin')
+        super().__init__(**config)
 
-        _SimpleLayoutBase.__init__(self, **config)
+    def add(self, client) -> None:
+        return super().add(client, offset_to_current=1)
 
-    def add(self, client):
-        """
-        WHEN: whenever a WINDOW is added to a GROUP and the LAYOUT is FOCUSED or
-              not
-        DO:   add the WINDOW to LAYOUT
-        """
-
-        # If a new window = new client(offsetted to focus)
-        return super().add(client,
-                           offset_to_current=1)
-
-    def configure(self, client, screen_rect):
-        # place() -  WINDOW CMD command
-        # | X |  Y | width | heght | borderwidth | above | margin |
-        # | 0 | 28 |  1920 |  1080 |           2 | False |      8 |
+    def configure_window_placement(self, client, screen_rect) -> None:
         client.place(screen_rect.x,
                      screen_rect.y,
                      screen_rect.width - 2 * self.border_width,
@@ -36,41 +31,44 @@ class Max(_SimpleLayoutBase):
                      self.margin
                      )
 
-        # "Focus" management
+    def configure_window_focus(self, client) -> None:
         if self.clients and client is self.clients.current_client:
             client.unhide()
         else:
             client.hide()
 
-    # redirect [M4] command to its functions
-    cmd_previous = _SimpleLayoutBase.previous
-    cmd_next = _SimpleLayoutBase.next
+    def configure(self, client, screen_rect) -> None:
+        self.configure_window_placement(client, screen_rect)
+        self.configure_window_focus(client)
 
-    cmd_up = cmd_previous
-    cmd_down = cmd_next
-
-class MaxFocus(Max): ...
 
 class Monad(MonadTall):
-    def cmd_normalize(self, redraw=True):
-        "Evenly distribute screen-space among secondary clients"
-        n = len(self.clients) - 1  # exclude main client, 0
-        # if secondary clients exist
+    """MonadTall with improved commands."""
+
+    def cmd_normalize(self, redraw=True) -> None:
+        """Evenly distribute screen-space among secondary clients"""
+
+        n = len(self.clients) - 1
         if n > 0 and self.screen_rect is not None:
             self.relative_sizes = [1.0 / n] * n
-        # reset main pane ratio
         if redraw:
             self.group.layout_all()
         self.do_normalize = False
 
-    def cmd_reset(self, redraw=True):
-        "Normalize main and secondary clients"
-        self.ratio = self._med_ratio
+    def cmd_reset(self, redraw=True) -> None:
+        """Normalize main and secondary clients"""
+
+        self.ratio = 0.5
         self.cmd_normalize(redraw)
 
-    def cmd_normalize_main(self, redraw=True):
-        "Normalize main client"
-        self.ratio = self._med_ratio
+    def cmd_normalize_main(self, redraw=True) -> None:
+        """Normalize main client"""
+        
+        self.ratio = 0.5
         self.group.layout_all()
 
+
 class MonadFocus(Monad): ...
+
+class MaxFocus(Max): ...
+
