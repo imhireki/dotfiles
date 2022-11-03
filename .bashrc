@@ -14,7 +14,7 @@ bind "set completion-ignore-case on"
 export TERM="xterm-256color"
 export EDITOR="nvim"
 export VISUAL="nvim"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER="sh -c 'col -bx | bat --theme=Dracula -l man -p'"
 export HISTCONTROL=ignoredups:erasedups
 export GIT_SSH_COMMAND="ssh -i ~/.ssh/github_key -F /dev/null"
 
@@ -22,17 +22,18 @@ export GIT_SSH_COMMAND="ssh -i ~/.ssh/github_key -F /dev/null"
 alias ls='exa -l -s type --color=always --group-directories-first'
 alias lsa='exa -al -s type --color=always --group-directories-first'
 alias grep='grep --color=auto'
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
-alias cat='bat'
+alias cat='bat --theme=Dracula'
 alias doom='~/.emacs.d/bin/doom'
-alias pytree='tree -I env -I __pycache__ -I *.pyc'
+alias pytree='tree --gitignore'
 
 # - Python
-alias actv8='. env/bin/activate'
+alias actv8='. env/bin/activate; source env.sh'
 
 # - Django
 alias djmm='python3 manage.py makemigrations'
