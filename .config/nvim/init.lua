@@ -1,9 +1,10 @@
 require('settings')
 require('mappings')
-require('lsp-config.language-servers')
+require('barbar-config')
+require('lualine-config')
 require('colorschemes-config.dracula')
+require('lsp-config.language-servers')
 require('packer-config')
 require('nvim-tree-config')
 require('treesitter-config')
-require('lualine-config')
-
+require('comment-config')
