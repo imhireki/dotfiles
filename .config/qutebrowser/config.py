@@ -154,7 +154,7 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # Type: QtColor
-# c.colors.webpage.bg = 'black'
+c.colors.webpage.bg = '#282a36'
 
 # Render all web contents using a dark theme. Example configurations
 # from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
@@ -166,5 +166,5 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 # `colors.webpage.darkmode.threshold.background` to 205.  - "With
 # selective inversion of everything": Combines the two variants   above.
 # Type: Bool
-#c.colors.webpage.darkmode.enabled = True
-config.bind('<Ctrl-y>', 'hint links spawn mpv {hint-url}')
+config.bind('<Ctrl-y>', 'hint links spawn mpv --title=browser_player {hint-url}')
+config.bind('<Ctrl-l>', 'hint links yank')
