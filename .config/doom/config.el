@@ -1,7 +1,7 @@
 ;; Editor
 (setq doom-font (font-spec :family "Caskaydia Cove Nerd Font" :size 14))
 (setq doom-theme 'doom-dracula)
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 (setq delete-selection-mode t)
 
 ;;Background Opacity
@@ -9,8 +9,8 @@
 ;;(add-to-list 'default-frame-alist '(alpha 70 70))
 
 ;; Documents
-(setq org-directory "~/Documents/org/")
-(setq fancy-splash-image "~/Pictures/random/splash.png")
+(setq org-directory "~/org/")
+;; (setq fancy-splash-image "~/pictures/splash.png")
 
 ;; Hook
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -25,6 +25,5 @@
 
 ;; Projectile
 (setq doom-themes-treemacs-theme "doom-colors")
-(setq projectile-project-search-path '("~/Documents/projects/"
-                                       "~/.config/"
-                                       "~/Documents/"))
+(setq projectile-project-search-path '("~/projects/"
+                                       "~/.config/"))
