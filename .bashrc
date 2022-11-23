@@ -26,7 +26,7 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 alias ls='exa -l -s type --color=always --group-directories-first'
 alias lsa='exa -al -s type --color=always --group-directories-first'
 alias grep='grep --color=auto'
-alias cat='bat --theme=Dracula'
+alias cat='bat --theme="Catppuccin-mocha"'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias mv='mv -i'
