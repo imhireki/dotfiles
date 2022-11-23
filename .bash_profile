@@ -13,6 +13,10 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 xrdb -load "$XDG_CONFIG_HOME/X11/xresources"
 
+# Nvidia
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nvidia"
+export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/nvidia"
+
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
 fi
