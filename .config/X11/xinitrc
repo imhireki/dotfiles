@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Keymap
-setxkbmap -option caps:none
-xmodmap "$XDG_CONFIG_HOME/.Xmodmap"
-
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
   [ -x "$f" ] && . "$f"
@@ -11,5 +7,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# Keymap
+setxkbmap -option caps:none
+xmodmap "$XDG_CONFIG_HOME/.Xmodmap"
+
 xrandr --output VGA-0 --mode 1360x768 --panning 1700x960 --scale 1.25 &
+
+# Xresources
+xrdb -load "$XDG_CONFIG_HOME/X11/xresources"
+
 exec qtile start
