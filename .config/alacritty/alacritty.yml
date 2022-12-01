@@ -1,11 +1,11 @@
 import:
-  - /home/hireki/.config/alacritty/dracula.yml
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
 
 window:
   padding:
     x: 5
     y: 5
-  opacity: 1.0
+  opacity: 0.75
   class:
     instance: Alacritty
     general: Alacritty
@@ -37,8 +37,8 @@ draw_bold_text_with_bright_colors: false
 
 cursor:
   style:
-    shape: Block
-    blinking: Off
+    shape: underline
+    blinking: on
 
 shell:
  program: /bin/bash
