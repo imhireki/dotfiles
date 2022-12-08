@@ -1,4 +1,3 @@
-# type: ignore
 
 from libqtile.widget.base import _TextBox
 from libqtile.log_utils import logger

@@ -4,9 +4,11 @@ layouts=(
     "Monad"
     "Monad Focus"
     "Monad Wide"
+    "Monad Wide Focus"
     "Max"
     "Max Focus"
     "Floating"
+    "Floating Focus"
 )
 
 chosen_layout=$(
@@ -22,12 +24,16 @@ case $chosen_layout in
     "Monad Focus")
         python3 $utils change_to_layout 1 ;;
     "Monad Wide")
-        python3 $utils change_to_layout 5 ;;
-    Max)
         python3 $utils change_to_layout 2 ;;
-    "Max Focus")
+    "Monad Wide Focus")
         python3 $utils change_to_layout 3 ;;
-    "Floating")
+    Max)
         python3 $utils change_to_layout 4 ;;
+    "Max Focus")
+        python3 $utils change_to_layout 5 ;;
+    "Floating")
+        python3 $utils change_to_layout 6 ;;
+    "Floating Focus")
+        python3 $utils change_to_layout 7 ;;
 esac
 

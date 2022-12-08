@@ -2,6 +2,8 @@
 
 from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.layout.xmonad import MonadTall
+from libqtile.layout.xmonad import MonadWide
+from libqtile.layout.floating import Floating
 
 
 class Max(_SimpleLayoutBase):
@@ -68,7 +70,12 @@ class Monad(MonadTall):
         self.group.layout_all()
 
 
-class MonadFocus(Monad): ...
+class MonadFocus(Monad): pass
 
-class MaxFocus(Max): ...
+class MonadWideFocus(Monad): pass
+
+class FloatingFocus(Floating): pass
+
+class MaxFocus(Max): pass 
+
 

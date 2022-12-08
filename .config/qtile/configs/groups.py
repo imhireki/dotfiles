@@ -1,20 +1,30 @@
 from libqtile.config import Group, Match
 
 
-browser = Match(wm_class='qutebrowser')
-emacs = Match(wm_class='Emacs')
-discord = Match(wm_class='discord')
-alacritty = Match(wm_class='Alacritty')
-mpv = Match(wm_class='mpv')
-
 GROUPS = [
-    Group('a', label='\uf488', layout='max', matches=[browser, mpv]),
-    Group('s', label='\uf0f6', layout='monadfocus'),
-    Group('d', label='\uf489', layout='monad', matches=[alacritty]),
-    Group('f', label='\uf869', layout='monad', matches=[discord]),
-    Group('z', label='\uf884', layout='monad'),
-    Group('x', label='\uf878', layout='floating'),
-    Group('c', label='\uf755', layout='monad'),
-    Group('v', label='\uf24a', layout='monad', matches=[emacs]),
+    Group('a', label='\uf488', layout='maxfocus', matches=[
+        Match(wm_class='qutebrowser'),
+        Match(title='browser_player', wm_class='mpv')
+        ]),
+    Group('s', label='\uf121', layout='monadfocus', matches=[
+        Match(wm_class='neovim')
+        ]),
+    Group('d', label='\uf489', layout='monadfocus', matches=[
+        Match(wm_class='Alacritty')
+        ]),
+    Group('f', label='\uea78', layout='monadwidefocus', matches=[
+        Match(wm_class='stig')
+        ]),
+    Group('z', label='\uf884', layout='monadwidefocus', matches=[
+        Match(wm_class='ncmpcpp')
+        ]),
+    Group('x', label='\uf878', layout='floatingfocus'),
+    Group('c', label='\uf755', layout='monadfocus', matches=[
+        Match(wm_class='mpv'),
+        Match(wm_class='ranger'),
+        Match(wm_class='Gimp')
+        ]),
+    Group('v', label='\uf4a0', layout='monadfocus', matches=[
+        Match(wm_class='notebook')
+        ]),
 ]
-

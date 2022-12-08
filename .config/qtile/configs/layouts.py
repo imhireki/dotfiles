@@ -1,8 +1,10 @@
 # type: ignore
 
-from libqtile.layout import Floating
+from libqtile.layout import Floating, MonadWide
 
-from custom.layouts import Max, MaxFocus, MonadFocus, Monad
+from custom.layouts import (
+    Max, MaxFocus, Monad, MonadFocus, MonadWideFocus, FloatingFocus
+    )
 from extra.palettes import PALETTE
 
 
@@ -21,18 +23,25 @@ monad_options = {
 max_options = {
     'margin': 10,
     'border_width': 3,
-    'border_focus': PALETTE[3] 
+    'border_focus': PALETTE[3]
+}
+
+floating_options = {
+    'border_focus': PALETTE[2],
+    'border_normal': PALETTE[3],
+    'border_width': 3,
 }
 
 LAYOUTS = [
     Monad(**monad_options),
     MonadFocus(**monad_options),
+    MonadWide(**monad_options),
+    MonadWideFocus(**monad_options),
     Max(**max_options),
     MaxFocus(**max_options),
-    Floating(border_focus=PALETTE[2],
-             border_normal=PALETTE[3],
-             border_width=3)
+    Floating(**floating_options),
+    FloatingFocus(**floating_options),
 ]
 
-FLOATING_LAYOUT = LAYOUTS[4]
+FLOATING_LAYOUT = LAYOUTS[6]
 

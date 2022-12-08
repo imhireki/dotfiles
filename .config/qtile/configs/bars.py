@@ -3,11 +3,11 @@
 from libqtile import bar, widget
 
 from extra.palettes import PALETTE
-from custom.widgets import AnimatedText
+# from custom.widgets import AnimatedText
 
 
 WIDGET_DEFAULTS = dict(
-    font='FiraCode',
+    font='Caskaydia Cove Nerd Font',
     fontsize=14,
     padding=1,
 )
@@ -15,60 +15,56 @@ WIDGET_DEFAULTS = dict(
 images = '~/.config/qtile/extra/images'
 
 textbox_options = {
-    'font': 'Caskaydia Cove Nerd Font',
     'fontsize': 20,
     'padding': 0
 }
 
 widgets = [
-    widget.TextBox(
-        **textbox_options,
-        text=" ",
-        background=PALETTE[2]
-        ),
     widget.Image(
         filename=f'{images}/kusanagi.png',
-        background=PALETTE[2]
-        ),
+        background=PALETTE[2],
+        margin_x=5),
     widget.TextBox(
-        **textbox_options,
+        fontsize=20,
+        padding=0,
         text="\ue0c0 ",
         background=PALETTE[0],
         foreground=PALETTE[2]),
     widget.GroupBox(
-        font='FiraCode Bold',
-        fontsize=25,
+        font='FiraCode',
+        fontsize=28,
         margin=3,
         highlight_method='line',
         highlight_color=PALETTE[0],
-        this_current_screen_border=[PALETTE[2]],
+        this_current_screen_border=[PALETTE[4]],
         background=PALETTE[0],
         inactive=PALETTE[1],
-        active=PALETTE[2]),
+        active=PALETTE[5]),
     widget.TextBox(
         **textbox_options,
         text="\ue0c0 ",
         background=PALETTE[3],
         foreground=PALETTE[0]),
-    AnimatedText(
-        text_list=[
-            '🔸 🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹'
-            '🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸',
-            '🔹 🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸'
-            '🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹',
-        ],
-        width=bar.STRETCH,
+    widget.Spacer(
         background=PALETTE[3],
-        foreground=PALETTE[0]),
-     widget.TextBox(
+    ),
+    # AnimatedText(
+    #     text_list=[
+    #         '🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 '
+    #         '🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪 🍪',
+    #         # '🔸 🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹'
+    #         # '🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸',
+    #         # '🔹 🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸'
+    #         # '🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹🔸🔹',
+    #     ],
+    #     width=bar.STRETCH,
+    #     background=PALETTE[3],
+    #     foreground=PALETTE[0]),
+    widget.TextBox(
         **textbox_options,
         text="\uE0B3\uE0B2",
         background=PALETTE[3],
         foreground=PALETTE[0]),
-    widget.TextBox(
-        text=" ",
-        background=PALETTE[0],
-        foreground=PALETTE[3]),
     widget.Image(
         margin=2,
         filename=f'{images}/cpu2.png',
@@ -89,7 +85,7 @@ widgets = [
         text="\uE0B9\uE0B3 ",
         **textbox_options,
         background=PALETTE[0],
-        foreground=PALETTE[2]),
+        foreground=PALETTE[4]),
     widget.Image(
         filename=f'{images}/ram2.png',
         background=PALETTE[0]),
@@ -102,7 +98,7 @@ widgets = [
         text="\uE0bd\uE0B3 ",
         **textbox_options,
         background=PALETTE[0],
-        foreground=PALETTE[3]),
+        foreground=PALETTE[5]),
     widget.Image(
         margin=2,
         filename=f'{images}/vga-card2.png',
@@ -116,7 +112,7 @@ widgets = [
         text="\uE0B9\uE0B3 ",
         **textbox_options,
         background=PALETTE[0],
-        foreground=PALETTE[2]),
+        foreground=PALETTE[4]),
     widget.Image(
         margin=2,
         filename=f'{images}/headphones2.png',
@@ -130,7 +126,7 @@ widgets = [
         text="\uE0Bd\uE0B3 ",
         **textbox_options,
         background=PALETTE[0],
-        foreground=PALETTE[3]),
+        foreground=PALETTE[5]),
     widget.Systray(background=PALETTE[0]),
     widget.Clock(
         padding=10,

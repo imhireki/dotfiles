@@ -3,7 +3,8 @@ from libqtile.config import Screen
 from . import bars
 
 
-wallpaper = '~/.config/qtile/extra/images/1285751.png'
+wallpaper = '~/pictures/wallpapers/8198406.jpg'
+# wallpaper = '~/pictures/wallpapers/898789.jpg'
 
 main_screen = Screen(
     top=bars.top_bar,
