@@ -1,35 +1,42 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 apps=(
-    "Terminal"
-    "Web Browser"
-    "Text Editor"
-    "Notebook"
-    "File Manager"
-    "Music Player"
-    "Torrent Downloader"
+    "terminal"
+    "web browser"
+    "text editor"
+    "notebook"
+    "file manager"
+    "music player"
+    "torrent downloader"
+    "document reader"
+    "audio controller"
 )
 
-chosen_app=$(printf '%s\n' "${apps[@]}" | dmenu -i -c -l 8)
+chosen_app=$(printf '%s\n' "${apps[@]}" | rofi -dmenu -i -p "app:")
 
 case $chosen_app in
-    "Terminal")
+    "terminal")
         alacritty;;
-    "Web Browser")
+    "web browser")
         qutebrowser;;
-    "Text Editor")
+    "text editor")
         alacritty --class neovim -e nvim;;
-    "Notebook")
-        alacritty --class notebook -e nvim ~/notes/agenda.org;;
-    "File Manager")
+    "notebook")
+        notebook=$(/bin/ls "$HOME/notes" | rofi -dmenu -i -p "notebook: ")
+        alacritty --class notebook -e nvim "$HOME/notes/$notebook";;
+    "file manager")
         alacritty --class ranger -e ranger;;
-    "Music Player")
+    "music player")
         if ! [pgrep mpd]; then mpd; fi
         alacritty --class ncmpcpp -e ncmpcpp;;
-    "Torrent Downloader")
+    "torrent downloader")
         if ! [pgrep transmission-daemon]; then
             transmission-daemon
         fi
         alacritty --class stig -e stig;;
+    "document reader")
+      zathura;;
+    "audio controller")
+      alacritty --class pulsemixer -e pulsemixer;;
 esac
 

@@ -38,13 +38,13 @@ window_management_keys = [
     Key([m4], 'u', lazy.layout.shrink()),
     Key([m4], 'i', lazy.layout.grow()),
     Key([m4], "o", lazy.layout.maximize()),
-]
+    ]
 
 menus_keys = [
     Key([m4], 'y', lazy.spawn('.config/qtile/menus/reset_layout.sh')),
     Key([m4], 'p', lazy.spawn('.config/qtile/menus/change_layout.sh')),
 
-    Key([m4], 'r', lazy.spawn('dmenu_run')),
+    Key([m4], 'r', lazy.spawn('rofi -show run')),
     Key([m4], 'w', lazy.spawn('.config/qtile/menus/run_apps.sh')),
     Key([m4], 'e', lazy.spawn('.config/qtile/menus/run_scripts.sh')),
 

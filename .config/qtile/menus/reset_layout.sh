@@ -1,22 +1,22 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 reset_choices=(
-    "All windows"
-    "Main window"
-    "Side windows"
+    "all windows"
+    "main window"
+    "side windows"
 )
 
 chosen_reset=$(
     printf '%s\n' "${reset_choices[@]}" |\
-    dmenu -i -c -l 3 
+    rofi -dmenu -i -p "layout reset:"
 )
 
 case $chosen_reset in
-    "All windows") 
+    "all windows") 
         qtile cmd-obj -o layout -f reset ;;
-    "Main window")
+    "main window")
         qtile cmd-obj -o layout -f normalize_main;;
-    "Side windows")
+    "side windows")
         qtile cmd-obj -o layout -f normalize;;
 esac
 

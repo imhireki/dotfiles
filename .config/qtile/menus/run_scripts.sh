@@ -1,30 +1,30 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 scripts=(
-    "Record video"
-    "Record video & audio"
-    "Stop recording"
-    "Drop caches"
-    "Print selection"
-    "Print screen"
+    "record video"
+    "record video & audio"
+    "stop recording"
+    "drop caches"
+    "print selection"
+    "print screen"
 )
 
 chosen_script=$(
-    printf '%s\n' "${scripts[@]}" | dmenu -i -c -l 6
+    printf '%s\n' "${scripts[@]}" | rofi -dmenu -i -p "script:"
 )
 
 case $chosen_script in
-    "Record video")
+    "record video")
         rec video;;
-    "Record video & audio")
+    "record video & audio")
         rec screencast;;
-    "Stop recording")
+    "stop recording")
         rec kill;;
-    "Drop caches")
+    "drop caches")
         sudo "$HOME/.local/bin/drop_caches";;
-    "Print selection")
+    "print selection")
         "$HOME/.local/bin/print" select;;
-    "Print screen")
+    "print screen")
         "$HOME/.local/bin/print" screen;;
 esac
 

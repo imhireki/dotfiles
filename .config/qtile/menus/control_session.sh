@@ -1,28 +1,28 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 session_controls=(
-    "Restart Qtile"
-    "Shutdown Qtile"
-    "Poweroff"
-    "Reboot"
-    "Suspend"
+    "restart qtile"
+    "shutdown qtile"
+    "poweroff"
+    "reboot"
+    "suspend"
 )
 
 chosen_session_control=$(
     printf '%s\n' "${session_controls[@]}" |\
-    dmenu -i -c -l 5
+    rofi -dmenu -i -p "session:"
 )
 
 case $chosen_session_control in
-    "Restart Qtile")
+    "restart qtile")
         qtile cmd-obj -o cmd -f restart;;
-    "Shutdown Qtile")
+    "shutdown qtile")
         qtile cmd-obj -o cmd -f shutdown;;
-    Poweroff)
+    poweroff)
         loginctl poweroff;;
-    Reboot)
+    reboot)
         loginctl reboot;;
-    Suspend)
+    suspend)
         sudo "$HOME/.local/bin/susp";;
 esac
 

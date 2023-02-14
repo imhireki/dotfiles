@@ -1,39 +1,39 @@
 #!/usr/bin/bash
 
 layouts=(
-    "Monad"
-    "Monad Focus"
-    "Monad Wide"
-    "Monad Wide Focus"
-    "Max"
-    "Max Focus"
-    "Floating"
-    "Floating Focus"
+    "monad"
+    "monad focus"
+    "monad wide"
+    "monad wide focus"
+    "max"
+    "max focus"
+    "floating"
+    "floating focus"
 )
 
 chosen_layout=$(
     printf '%s\n' "${layouts[@]}" |\
-    dmenu -i -c -l 6
+    rofi -dmenu -i -p "windows layout:"
 )
 
 utils="$XDG_CONFIG_HOME/qtile/custom/commands.py"
 
 case $chosen_layout in
-    Monad)
+    monad)
         python3 $utils change_to_layout 0 ;;
-    "Monad Focus")
+    "monad focus")
         python3 $utils change_to_layout 1 ;;
-    "Monad Wide")
+    "monad wide")
         python3 $utils change_to_layout 2 ;;
-    "Monad Wide Focus")
+    "monad wide focus")
         python3 $utils change_to_layout 3 ;;
-    Max)
+    max)
         python3 $utils change_to_layout 4 ;;
-    "Max Focus")
+    "max focus")
         python3 $utils change_to_layout 5 ;;
-    "Floating")
+    "floating")
         python3 $utils change_to_layout 6 ;;
-    "Floating Focus")
+    "floating focus")
         python3 $utils change_to_layout 7 ;;
 esac
 
