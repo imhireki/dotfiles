@@ -29,6 +29,7 @@ config.set('content.javascript.enabled', True, 'qute://*/*')
 
 # Keybindings
 config.bind('<Ctrl-y>', 'hint links spawn --detach mpv --title=browser_player {hint-url}')
+config.bind('<Ctrl-i>', 'hint images spawn bash -c "wget \'{hint-url}\' -O /tmp/web_sxiv && sxiv /tmp/web_sxiv"')
 config.bind('<Ctrl-l>', 'hint links yank')
 
 # Background color for webpages if unset (or empty to use the theme's color).
