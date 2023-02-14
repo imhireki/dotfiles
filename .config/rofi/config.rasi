@@ -1,13 +1,13 @@
 * {
     /* Dracula theme colour palette */
-    drac-bgd: #282a36;
-    drac-cur: #44475a;
-    drac-fgd: #f8f8f2;
+    drac-bgd: #1e1e2e;
+    drac-cur: #45475a;
+    drac-fgd: #cdd6f4;
     drac-cmt: #6272a4;
-    drac-cya: #8be9fd;
-    drac-grn: #50fa7b;
+    drac-cya: #89b4fa;
+    drac-grn: #a6e3a1;
     drac-ora: #ffb86c;
-    drac-pnk: #ff79c6;
+    drac-pnk: #cba6f7;
     drac-pur: #bd93f9;
     drac-red: #ff5555;
     drac-yel: #f1fa8c;
@@ -23,8 +23,8 @@
     selected-background: @active-background;
     selected-urgent-background: @urgent-background;
     selected-active-background: @active-background;
-    separatorcolor: @active-background;
-    bordercolor: #6272a4;
+    separatorcolor: @drac-pnk;
+    bordercolor: @drac-pnk;
 }
 
 #window {
@@ -51,7 +51,7 @@
 #listview {
     fixed-height: 0;
     border:       2px dash 0px 0px ;
-    border-color: @bordercolor;
+    border-color: @drac-cya;
     spacing:      2px ;
     scrollbar:    false;
     padding:      2px 0px 0px ;
@@ -74,7 +74,7 @@
 }
 #element.selected.normal {
     background-color: @selected-background;
-    text-color:       @foreground;
+    text-color:       @background-color;
 }
 #element.selected.urgent {
     background-color: @selected-urgent-background;
