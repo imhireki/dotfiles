@@ -1,3 +1,0 @@
-export ZDOTDIR=$HOME/.config/zsh
-export HISTFILE=$HOME/.local/state/zsh/history
-zstyle ':completion:*' cache-path $HOME/.cache/zsh/zcompcache
