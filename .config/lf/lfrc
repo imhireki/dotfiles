@@ -1,0 +1,8 @@
+set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
+
+cmd edit_detached ${{
+	 nohup alacritty --class helix -e /bin/helix "$f" >/dev/null 2>&1 &
+}} 
+
+map e edit_detached "$f"
