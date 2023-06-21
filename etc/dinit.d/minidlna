@@ -1,1 +1,5 @@
-/etc/dinit.d/minidlna
+type            = process
+command         = /usr/bin/minidlnad -R -v -S -f /etc/minidlna.conf
+logfile         = /var/log/dinit/minidlna.log
+depends-on      = iptables
+run-as          = minidlna
