@@ -3,6 +3,11 @@ set cleaner ~/.config/lf/cleaner
 
 cmd edit_detached ${{
 	 nohup alacritty --class helix -e /bin/helix "$f" >/dev/null 2>&1 &
+}}
+
+cmd open_detached_terminal ${{
+	 nohup alacritty --working-directory "$f" >/dev/null 2>&1 &
 }} 
 
 map e edit_detached "$f"
+map a open_detached_terminal "$f"
