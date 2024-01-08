@@ -1,0 +1,24 @@
+# Some rules for computationally or IO expensive tools from the GNU coreutils
+{ "name": "cat",       "type": "coreutils" }
+{ "name": "cksum",     "type": "coreutils" }
+{ "name": "comm",      "type": "coreutils" }
+{ "name": "dd",        "type": "coreutils" }
+{ "name": "df",        "type": "coreutils" }
+{ "name": "du",        "type": "coreutils" }
+{ "name": "install",   "type": "coreutils" }
+{ "name": "join",      "type": "coreutils" }
+{ "name": "md5sum",    "type": "coreutils" }
+{ "name": "mkdir",     "type": "coreutils" }
+{ "name": "mv",        "type": "coreutils" }
+{ "name": "rm",        "type": "coreutils" }
+{ "name": "rmdir",     "type": "coreutils" }
+{ "name": "sha1sum",   "type": "coreutils" }
+{ "name": "sha256sum", "type": "coreutils" }
+{ "name": "sha384sum", "type": "coreutils" }
+{ "name": "sha512sum", "type": "coreutils" }
+{ "name": "shred",     "type": "coreutils" }
+{ "name": "sort",      "type": "coreutils" }
+{ "name": "sum",       "type": "coreutils" }
+{ "name": "tac",       "type": "coreutils" }
+{ "name": "tee",       "type": "coreutils" }
+{ "name": "wc",        "type": "coreutils" }

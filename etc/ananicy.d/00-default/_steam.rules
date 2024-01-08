@@ -1,0 +1,8 @@
+################################################################################
+# Rules for Steam and Steam Apps: http://store.steampowered.com
+{ "name": "steam", "type": "game-launcher" }
+# Steam integrated web browser
+{ "name": "steamwebhelper", "type": "web-browser" }
+
+# https://store.steampowered.com/app/730
+{ "name": "Unturned.x86_64", "type": "game"}

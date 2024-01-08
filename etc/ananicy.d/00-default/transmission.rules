@@ -1,0 +1,4 @@
+# Torrent client: https://www.transmissionbt.com
+{ "name": "transmission-cli",    "type": "torrent" }
+{ "name": "transmission-daemon", "type": "torrent" }
+{ "name": "transmission-remote", "type": "torrent" }

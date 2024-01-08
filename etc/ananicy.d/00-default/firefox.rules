@@ -1,0 +1,3 @@
+# Firefox (https://www.mozilla.org/firefox/)
+{ "name": "firefox", "type":"web-browser" }
+{ "name": "firefox-bin", "type":"web-browser" }

@@ -1,0 +1,112 @@
+// ######### System ##########
+
+// Qtile, Xorg
+{"type":"window-manager", "nice": -15, "sched": "rr", "ioclass": "realtime"}
+
+// Pulseaudio
+{"type":"audio-server", "nice": -15, "sched": "rr", "ioclass": "realtime"}
+
+// Picom
+{"type":"compositor", "nice": -10, "ionice": 0}
+
+// ######### Game ##########
+
+// Unturned, LoL
+{"type":"game", "nice":-10, "ionice":0}
+
+// ######### System Utils ##########
+
+// Alacritty
+{"type":"terminal", "nice": -7, "ionice": 2, "oom_score_adj": -999}
+
+// Maim
+{"type":"screenshotter", "nice": -7, "ionice": 2}
+
+// Rofi, Dmenu
+{"type":"menu", "nice": -7, "ionice": 2}
+
+// ######### System-Related Apps ##########
+
+// Helix
+{"type":"document-editor", "nice": -5, "ionice": 3, "oom_score_adj": -999}
+
+// Lf
+{"type":"file-manager", "nice": -5, "ionice": 3}
+
+// Htop
+{"type":"process-viewer", "nice": -5, "ionice": 3}
+
+// Mpv
+{"type":"video-player", "nice": -5, "ionice": 3}
+
+// MPD, Ncmpcpp
+{"type":"music-player", "nice": -5, "ionice": 3}
+
+// MuPDF
+{"type":"document-viewer", "nice": -5, "ionice": 3}
+
+// Sxiv
+{"type":"image-viewer", "nice": -5, "ionice": 3}
+
+// ######### Web Apps ##########
+
+// Firefox
+{"type":"web-browser", "nice": 0}
+
+// Discord
+{"type":"chat", "nice": 0}
+
+// ######### Game Client ##########
+
+// Steam, RiotClient, LeagueClient
+{"type":"game-launcher", "nice": 0}
+
+// ######### Services ##########
+
+// Mkinitcpio, Minidlna, Docker
+{"type":"service", "nice": 5, "ionice": 5}
+
+// ######### Archiver ##########
+
+// 7z, Tar, Gzip
+{"type":"archiver", "nice":5, "ionice": 6}
+
+// ######### CoreUtils #########
+
+// CoreUtils
+{"type":"coreutils", "nice":10, "ioclass":"idle", "sched":"idle", "cgroup":"cpu80"}
+
+// ######### Download #########
+
+// Transmission
+{"type":"torrent", "nice": 10, "sched": "idle", "ioclass": "idle"}
+
+// yt-dlp, Curl, Wget
+{"type":"download", "nice": 10, "sched": "idle", "ioclass": "idle"}
+
+// ######### Package Manager #########
+
+// Pacman, Pamac, Makepkg, Paru
+{"type":"package-manager", "nice": 10, "sched": "idle", "ioclass": "idle", "cgroup":"cpu80"}
+
+// ######### Media Processor #########
+
+// FFmpeg
+{"type":"ffmpeg", "nice":15, "sched":"idle", "ioclass":"idle", "cgroup":"cpu80"}
+
+// Imagemagick
+{"type":"imagemagick", "nice":15, "sched":"idle", "ioclass":"idle", "cgroup":"cpu80"}
+
+// ######### Compiler #########
+
+// Cmake, Rust, Go
+{ "type":"compiler", "nice": 19, "sched":"idle", "ioclass":"idle", "cgroup":"cpu80"}
+
+// ######### Runtimer #########
+
+// Node
+{ "type":"runtimer", "nice": 19, "sched":"idle", "ioclass":"idle", "cgroup":"cpu80"}
+
+// ######### Placeholder #########
+
+{"type":"TODO"}

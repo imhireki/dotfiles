@@ -1,0 +1,3 @@
+# ffmpeg - audio and video converter: https://www.ffmpeg.org/
+{ "name": "ffmpeg", "type": "ffmpeg" }
+

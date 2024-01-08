@@ -1,0 +1,4 @@
+# ImageMagick - image viewing/manipulation program: https://imagemagick.org
+{ "name": "convert", "type": "imagemagick"}
+{ "name": "magick", "type": "imagemagick"}
+{ "name": "montage", "type": "imagemagick"}
