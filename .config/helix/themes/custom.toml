@@ -1,2 +1,10 @@
 inherits = "catppuccin_mocha"
 "ui.background" = { }
+"markup.heading.1" = "pink"
+"markup.heading.2" = "teal"
+"markup.heading.3" = "green"
+"markup.heading.4" = "yellow"
+"markup.heading.5" = "mauve"
+"markup.heading.6" = "lavender"
+"markup.list" = "lavender"
+

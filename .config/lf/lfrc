@@ -1,3 +1,4 @@
+set ratios 1:2:3
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/cleaner
 
@@ -9,5 +10,10 @@ cmd open_detached_terminal ${{
 	 nohup alacritty --working-directory "$f" >/dev/null 2>&1 &
 }} 
 
+cmd list_images ${{
+	nohup sxiv -t -b "$f" > /dev/null &
+}}
+
 map e edit_detached "$f"
 map a open_detached_terminal "$f"
+map x list_images "$f"

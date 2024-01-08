@@ -15,8 +15,8 @@ SAVEHIST=1000
 # Variables
 #------------------------------
 export TERM="xterm-256color"
-export EDITOR="/bin/helix"
-export MANPAGER="sh -c 'col -bx | bat --theme=Dracula -l man -p'"
+export EDITOR="alacritty --class helix -e /bin/helix"
+export MANPAGER="sh -c 'col -bx | /bin/bat --style=plain --theme=Dracula -l man -p'"
 export HISTCONTROL=ignoredups:erasedups
 export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/github -F /dev/null"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
@@ -24,6 +24,10 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+export TEXMFHOME="$XDG_DATA_HOME/texmf"
+export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
+export TEXMFCONFIG="$XDG_CONFIG_HOME/texlive/texmf-config"
+
 #-----------------------------
 # Dircolors
 #-----------------------------
@@ -59,7 +63,6 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
 alias wget='wget --hsts-file=$XDG_DATA_HOME/wget-hsts -q -o $XDG_DATA_HOME/wget-log --progress=dot:mega -c'
-alias nvidia-settings='nvidia-settings --config="$XDG_CONFIG_HOME"/nvidia/settings'
 
 alias actv8=". env/bin/activate"
 alias djmm="python3 manage.py makemigrations"
