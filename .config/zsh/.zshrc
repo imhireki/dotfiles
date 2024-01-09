@@ -16,7 +16,8 @@ SAVEHIST=1000
 #------------------------------
 export TERM="xterm-256color"
 export EDITOR="alacritty --class helix -e /bin/helix"
-export MANPAGER="sh -c 'col -bx | /bin/bat --style=plain --theme=Dracula -l man -p'"
+export MANPAGER="sh -c 'col -bx | bat --theme=Dracula -l man -p'"
+export MANROFFOPT="-c"
 export HISTCONTROL=ignoredups:erasedups
 export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/github -F /dev/null"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
