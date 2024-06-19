@@ -4,14 +4,11 @@ from libqtile.layout.base import _SimpleLayoutBase
 from libqtile.layout.xmonad import MonadTall
 from libqtile.layout.xmonad import MonadWide
 from libqtile.layout.floating import Floating
+from libqtile.command.base import expose_command
 
 
 class Max(_SimpleLayoutBase):
     """Maximized layout with borders."""
-    cmd_previous = _SimpleLayoutBase.previous
-    cmd_up = cmd_previous
-    cmd_next = _SimpleLayoutBase.next
-    cmd_down = cmd_next
 
     def __init__(self, **config) -> None:
         self.border_width = config.get('border_width')
@@ -43,11 +40,20 @@ class Max(_SimpleLayoutBase):
         self.configure_window_placement(client, screen_rect)
         self.configure_window_focus(client)
 
+    @expose_command("previous")
+    def up(self):
+        _SimpleLayoutBase.previous(self)
+
+    @expose_command("next")
+    def down(self):
+        _SimpleLayoutBase.next(self)
+
 
 class Monad(MonadTall):
     """MonadTall with improved commands."""
 
-    def cmd_normalize(self, redraw=True) -> None:
+    @expose_command("normalize")
+    def normalize(self, redraw=True) -> None:
         """Evenly distribute screen-space among secondary clients"""
 
         n = len(self.clients) - 1
@@ -57,13 +63,15 @@ class Monad(MonadTall):
             self.group.layout_all()
         self.do_normalize = False
 
-    def cmd_reset(self, redraw=True) -> None:
+    @expose_command("reset")
+    def reset(self, redraw=True) -> None:
         """Normalize main and secondary clients"""
 
         self.ratio = 0.5
-        self.cmd_normalize(redraw)
+        self.normalize(redraw)
 
-    def cmd_normalize_main(self, redraw=True) -> None:
+    @expose_command("normalize_main")
+    def normalize_main(self, redraw=True) -> None:
         """Normalize main client"""
         
         self.ratio = 0.5
